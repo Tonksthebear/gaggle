@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Gaggle::Engine => "/gaggle"
+  mount Gaggle::Engine, at: "/gaggle"
 end
