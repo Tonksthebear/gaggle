@@ -56,6 +56,13 @@ This document summarizes the current model design and business logic for the Gag
 - **Database Migrations:**
   - Tables will be prefixed appropriately (e.g., `gaggle_gooses`, `gaggle_threads`, `gaggle_messages`, `gaggle_notifications`) to avoid naming collisions in the host application.
 
+## Completed Tasks
+- Implemented the thread creation flow:
+  - Updated the `Gaggle::ThreadsController` to include `new` and `create` actions.
+  - Created the `app/views/gaggle/threads/new.html.erb` view with a form to create new threads.
+  - Styled the form using Tailwind CSS.
+  - Added an "Edit" button to the thread show view, styled with Tailwind CSS.
+
 ## Next Steps
 - Implement models and migrations for the above structure.
 - Develop the callback/service for notification generation within `Gaggle::Message`.

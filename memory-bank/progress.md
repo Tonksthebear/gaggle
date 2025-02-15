@@ -9,6 +9,11 @@
   - Notification logic is defined such that when a message is created:
     - If it is sent by the user (nil sender), all geese that have previously participated in the thread are notified.
     - Additionally, an "@goose_name" mention in the message triggers a targeted notification to that goose even if they haven’t yet participated.
+- Implemented the thread creation flow:
+  - Updated the `Gaggle::ThreadsController` to include `new` and `create` actions.
+  - Created the `app/views/gaggle/threads/new.html.erb` view with a form to create new threads.
+  - Styled the form using Tailwind CSS.
+  - Added an "Edit" button to the thread show view, styled with Tailwind CSS.
 
 ## Key Design Decisions
 - **Namespacing:** Ensures smooth integration with host applications by avoiding naming conflicts.
