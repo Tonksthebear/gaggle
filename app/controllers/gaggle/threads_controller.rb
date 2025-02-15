@@ -1,11 +1,7 @@
 module Gaggle
   class ThreadsController < ApplicationController
-    def index
-      render plain: "Threads index"
-    end
-
     def show
-      render plain: "Thread show: #{params[:id]}"
+      @thread = Gaggle::Thread.find(params[:id])
     end
 
     def new
@@ -26,6 +22,12 @@ module Gaggle
 
     def destroy
       render plain: "Thread destroyed: #{params[:id]}"
+    end
+
+    private
+
+    def thread_params
+      params.require(:gaggle_thread).permit(:name)
     end
   end
 end

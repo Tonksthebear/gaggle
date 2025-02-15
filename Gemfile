@@ -28,3 +28,5 @@ gem "turbo-rails", "~> 2.0"
 gem "stimulus-rails", "~> 1.3"
 
 gem "tailwindcss-rails", "~> 2.7"
+
+gem "tailwindcss-ruby", "~> 4.0"

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Gaggle</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= yield :head %>
-
-  <%= stylesheet_link_tag    "gaggle/application", media: "all" %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+<html class="h-full bg-white">
+  <head>
+    <title>Gaggle</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "builds/application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+  </head>
+    <html class="h-full bg-white">
+  <body class="h-full">
+    <%= render layout: 'sidebar', locals: { threads: @threads } do %>
+      <%= yield %>
+    <% end %>
+  </body>
 </html>

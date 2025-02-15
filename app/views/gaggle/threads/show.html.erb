@@ -1,2 +1,20 @@
-<h1>Thread Show</h1>
-<p>This is the thread show view for thread with ID: <%= params[:id] %></p>
+<h1 class="text-2xl font-bold mb-4"><%= @thread.name %></h1>
+
+<div id="messages" class="h-[60vh] overflow-y-auto mb-5 border border-gray-300 p-3">
+  <% @thread.messages.each do |message| %>
+    <div class="message mb-2">
+      <strong><%= message.user_name || "User" %>:</strong> <%= message.content %>
+    </div>
+  <% end %>
+</div>
+
+<div id="new-message">
+  <%= form_with(model: [@thread, Gaggle::Message.new], local: true) do |form| %>
+    <div>
+      <%= form.text_area :content, rows: 3, placeholder: "Type your message here...", class: "w-full p-2 border border-gray-300 rounded" %>
+    </div>
+    <div class="mt-3">
+      <%= form.submit "Send", class: "px-4 py-2 bg-gray-800 text-gray-100 rounded hover:bg-gray-700" %>
+    </div>
+  <% end %>
+</div>
