@@ -1,33 +1,47 @@
 module Gaggle
   class ThreadsController < ApplicationController
-    def show
-      @thread = Gaggle::Thread.find(params[:id])
-    end
+    before_action :set_thread
 
-    def new
-      render plain: "Thread new"
-    end
+    def show; end
+
+    def new; end
 
     def create
-      render plain: "Thread created"
+      @thread.assign_attributes(thread_params)
+
+      if @thread.save
+        redirect_to @thread, notice: "Thread was successfully created."
+      else
+        render :new
+      end
     end
 
-    def edit
-      render plain: "Thread edit: #{params[:id]}"
-    end
+    def edit; end
 
     def update
-      render plain: "Thread updated: #{params[:id]}"
+      if @thread.update(thread_params)
+        redirect_to @thread, notice: "Thread was successfully updated."
+        Turbo::StreamsChannel.broadcast_update_to "application",
+          targets: ".#{dom_id(@thread, :title)}",
+          content: @thread.name
+      else
+        render :edit
+      end
     end
 
     def destroy
-      render plain: "Thread destroyed: #{params[:id]}"
+      @thread.destroy
+      redirect_to root_url
     end
 
     private
 
+    def set_thread
+      @thread = Gaggle::Thread.find_by(id: params[:id]) || Gaggle::Thread.new
+    end
+
     def thread_params
-      params.require(:gaggle_thread).permit(:name)
+      params.require(:thread).permit(:name)
     end
   end
 end

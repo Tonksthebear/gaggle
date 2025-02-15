@@ -1,2 +1,11 @@
-<h1>Edit Thread</h1>
-<p>This is the thread edit view for thread with ID: <%= params[:id] %></p>
+<%= turbo_frame_tag dom_id(@thread, :title), class: "flex flex-row space-x-2 items-center w-full justify-between mb-2" do %>
+  <%= form_with model: @thread, class: "flex flex-row space-x-2 items-center w-full justify-between" do |form| %>
+    <%= form.text_field :name, class: "text-2xl font-bold flex-grow p-2 border border-gray-300 rounded" %>
+    <%= button_tag class: yass(btn: [:xs, :success]) do %>
+      <%= form.submit '', class: 'hidden' %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      </svg>
+    <% end %>
+  <% end %>
+<% end %>

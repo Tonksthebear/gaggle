@@ -2,6 +2,13 @@ module Gaggle
   class Engine < ::Rails::Engine
     isolate_namespace Gaggle
 
+    config.to_prepare do
+      Classy::Yaml.setup do |config|
+        Gaggle::ApplicationController.helper(Classy::Yaml::Helpers)
+        config.engine_files << Engine.root.join("config/utility_classes.yml")
+      end
+    end
+
     initializer "gaggle.development_check" do
       unless Rails.env.development? || Rails.env.test?
         warn "Gaggle is intended for development use only. It is not loaded in #{Rails.env} environment."

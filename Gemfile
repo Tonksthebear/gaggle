@@ -30,3 +30,5 @@ gem "stimulus-rails", "~> 1.3"
 gem "tailwindcss-rails", "~> 2.7"
 
 gem "tailwindcss-ruby", "~> 4.0"
+
+gem "classy-yaml", "~> 1.3"

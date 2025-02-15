@@ -4,11 +4,12 @@
     <title>Gaggle</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "builds/application", media: "all" %>
-    <%= javascript_include_tag "application" %>
+    <%= javascript_importmap_tags 'gaggle/application' %>
+    <%= stylesheet_link_tag "builds/application", media: "all", data: { turbo_track: "reload" } %>
   </head>
     <html class="h-full bg-white">
   <body class="h-full">
+    <%= turbo_stream_from 'gaggle'%>
     <%= render layout: 'sidebar', locals: { threads: @threads } do %>
       <%= yield %>
     <% end %>
