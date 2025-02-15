@@ -14,3 +14,17 @@ gem "rubocop-rails-omakase", require: false
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
+
+gem "solid_queue", "~> 1.0"
+
+gem "solid_cache", "~> 1.0"
+
+gem "solid_cable", "~> 3.0"
+
+gem "importmap-rails", "~> 2.0"
+
+gem "turbo-rails", "~> 2.0"
+
+gem "stimulus-rails", "~> 1.3"
+
+gem "tailwindcss-rails", "~> 2.7"
