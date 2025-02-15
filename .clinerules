@@ -1,0 +1,48 @@
+# Project Guidelines
+
+## Documentation Requirements
+
+- Maintain changelog entries in CHANGELOG.md
+
+## Architecture Decision Records
+
+Create ADRs in /docs/adr for:
+
+- Major dependency changes
+- Architectural pattern changes
+- New integration patterns
+- Database schema changes
+
+Follow template in /docs/adr/template.md
+
+## Code Style & Patterns
+
+- Ruby on Rails with controllers following only standard CRUD routes (index, show, new, create, edit, update, destroy)
+- Shallow nesting of resources (index, new, create routes are nested in the parent, others are unnested and belong to the resource itself)
+- Prefer composition over inheritance
+- StimulusJS, TailwindCSS, and Turbo.js are all used on the front end
+- Turbo streams are used for live updating of web pages
+
+## Testing Standards
+
+- Tests are minitest
+- Controller and model tests necessary when adding or editing either
+- System test required for each critical user flow
+- All tests use fixtures
+
+# Security
+
+## Sensitive Files
+
+DO NOT read or modify:
+
+- .env files
+- \*_/config/secrets._
+- \*_/_.pem
+- Any file containing API keys, tokens, or credentials
+
+## Security Practices
+
+- Never commit sensitive files
+- Use environment variables for secrets
+- Keep credentials out of logs and output
