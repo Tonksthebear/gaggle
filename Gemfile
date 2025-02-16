@@ -32,3 +32,5 @@ gem "tailwindcss-rails", "~> 2.7"
 gem "tailwindcss-ruby", "~> 4.0"
 
 gem "classy-yaml", "~> 1.3"
+
+gem "erb-formatter", "~> 0.7.3"

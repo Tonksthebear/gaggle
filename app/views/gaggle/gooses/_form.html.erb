@@ -1,0 +1,15 @@
+<div class="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
+  <%= form_with model: @goose, local: true, class: "space-y-4" do |f| %>
+    <div>
+      <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+    </div>
+    <div>
+      <%= f.label :prompt, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.text_area :prompt, rows: 4, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+    </div>
+    <div>
+      <%= f.submit "Save", class: yass(btn: :blue) %>
+    </div>
+  <% end %>
+</div>

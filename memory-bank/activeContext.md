@@ -62,6 +62,10 @@ This document summarizes the current model design and business logic for the Gag
   - Created the `app/views/gaggle/threads/new.html.erb` view with a form to create new threads.
   - Styled the form using Tailwind CSS.
   - Added an "Edit" button to the thread show view, styled with Tailwind CSS.
+- Implemented the Goose creation and edit flow:
+  - Updated the `Gaggle::GooseController` to include full CRUD actions.
+  - Created the profile view at `app/views/gaggle/gooses/show.html.erb`, and the new and edit views at `app/views/gaggle/goose/new.html.erb` and `app/views/gaggle/goose/edit.html.erb`.
+  - Updated form partials with a card-style layout.
 
 ## Next Steps
 - Implement models and migrations for the above structure.

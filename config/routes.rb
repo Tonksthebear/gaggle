@@ -6,5 +6,5 @@ Gaggle::Engine.routes.draw do
   end
 
   resources :messages, except: [ :new, :create ]
-  resources :goose
+  resources :gooses
 end

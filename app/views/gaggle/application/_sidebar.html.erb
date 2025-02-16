@@ -83,6 +83,7 @@
                       <!-- Current: "bg-indigo-700 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-700" -->
                       <%= link_to goose, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                         <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white"><%= goose.name[0] %></span>
+                        <%= goose.name %>
                       <% end %>
                     </li>
                   <% end %>
@@ -151,6 +152,7 @@
                   <!-- Current: "bg-indigo-700 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-700" -->
                   <%= link_to goose, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                     <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white"><%= goose.name[0] %></span>
+                    <%= goose.name %>
                   <% end %>
                 </li>
               <% end %>
