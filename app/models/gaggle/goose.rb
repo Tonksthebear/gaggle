@@ -1,9 +1,10 @@
 module Gaggle
   class Goose < ApplicationRecord
+  has_many :sessions, class_name: "Gaggle::Session"
     self.table_name = "gaggle_gooses"
 
-    # process_pid: string - stores the process PID of the actual Goose CLI
-    has_many :messages, class_name: "Gaggle::Message", foreign_key: "gaggle_goose_id"
+    has_many :messages
+    has_many :sessions
 
     validates :name, presence: true
   end

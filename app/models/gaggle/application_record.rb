@@ -1,5 +1,7 @@
 module Gaggle
   class ApplicationRecord < ActiveRecord::Base
-    self.abstract_class = true
+    include ActionView::RecordIdentifier
+    self.abstract_class =true
+    connects_to database: { writing: :gaggle, reading: :gaggle }
   end
 end

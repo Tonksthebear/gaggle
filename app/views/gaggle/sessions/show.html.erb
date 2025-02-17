@@ -1,0 +1,21 @@
+<%= turbo_stream_from @session %>
+
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Executable Console</h1>
+  <!-- Output display for the running executable -->
+  <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto">
+    <pre><code id="<%= dom_id(@session, :code) %>"><%= @session&.output || "No output available..." %></code></pre>
+  </div>
+
+  <% if @session.running? %>
+    <div>
+      <%= form_with model: @session do |f| %>
+        <div class="flex">
+          <%= f.text_field :input, placeholder: "Enter command here...", class: "flex-grow p-2 border rounded" %>
+          <%= f.submit "Send", class: "ml-2 px-4 py-2 bg-blue-600 text-white rounded" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    Session is no longer running. Please start it again.
+  <% end %>

@@ -8,7 +8,6 @@ Gem::Specification.new do |spec|
   spec.summary     = "Gem providing core functionality for Gaggle."
   spec.description = "A gem that encapsulates the facilitation and use of multiple instances of the Goose instances when in development."
   spec.license     = "MIT"
-  spec.add_dependency "solid_queue"
   spec.add_dependency "turbo-rails"
   spec.add_dependency "stimulus-rails"
   spec.add_dependency "tailwindcss-rails"

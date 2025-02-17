@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_180303) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_15_225000) do
   create_table "gaggle_gooses", force: :cascade do |t|
     t.string "name", null: false
     t.text "prompt"
@@ -38,6 +38,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_180303) do
     t.index ["gaggle_message_id"], name: "index_gaggle_notifications_on_gaggle_message_id"
   end
 
+  create_table "gaggle_sessions", force: :cascade do |t|
+    t.integer "goose_id", null: false
+    t.text "output"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goose_id"], name: "index_gaggle_sessions_on_goose_id"
+  end
+
   create_table "gaggle_threads", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -48,4 +56,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_180303) do
   add_foreign_key "gaggle_messages", "gaggle_threads"
   add_foreign_key "gaggle_notifications", "gaggle_gooses"
   add_foreign_key "gaggle_notifications", "gaggle_messages"
+  add_foreign_key "gaggle_sessions", "gaggle_gooses", column: "goose_id"
 end

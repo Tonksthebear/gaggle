@@ -1,0 +1,4 @@
+  <% @sessions.each do |session| %>
+    <%= link_to "Session", session, class: yass(btn: :gray) %>
+  <% end %>
+  <%= button_to "Start Session", goose_sessions_path(@goose), class: "bg-blue-600 text-white px-4 py-2 rounded" %>

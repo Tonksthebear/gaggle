@@ -10,8 +10,11 @@ development:
   gaggle:
     <<: *default
     database: storage/gaggle.sqlite3
-    migration_paths:: db/migrate_gaggle
-
+    migrations_paths:: Gaggle::Engine.root.join("db/migrate_gaggle")
+  queue:
+    <<: *default
+    database: storage/development_queue.sqlite3
+    migrations_paths: db/queue_migrate
 test:
   <<: *default
   database: storage/test.sqlite3

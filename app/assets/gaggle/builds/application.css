@@ -691,6 +691,9 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-80 {
+    height: calc(var(--spacing) * 80);
+  }
   .h-\[60vh\] {
     height: 60vh;
   }
@@ -853,6 +856,9 @@
   .border-transparent {
     border-color: transparent;
   }
+  .bg-black {
+    background-color: var(--color-black);
+  }
   .bg-blue-500 {
     background-color: var(--color-blue-500);
   }
@@ -909,6 +915,9 @@
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
   }
   .p-5 {
     padding: calc(var(--spacing) * 5);
@@ -1023,6 +1032,9 @@
   }
   .text-gray-700 {
     color: var(--color-gray-700);
+  }
+  .text-green-500 {
+    color: var(--color-green-500);
   }
   .text-indigo-200 {
     color: var(--color-indigo-200);

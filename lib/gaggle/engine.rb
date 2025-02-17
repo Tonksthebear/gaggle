@@ -31,5 +31,9 @@ module Gaggle
     initializer "gaggle.importmap.assets" do
       Rails.application.config.assets.paths << Engine.root.join("app/javascript")
     end
+
+    initializer "gaggle.migrations" do
+      Rails.application.config.paths["db/migrate"] << Gaggle::Engine.root.join("db/migrate_gaggle")
+    end
   end
 end

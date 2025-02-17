@@ -14,6 +14,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_180303) do
   create_table "gaggle_gooses", force: :cascade do |t|
     t.string "name", null: false
     t.text "prompt"
+    t.string "process_pid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
