@@ -70,4 +70,5 @@ This document summarizes the current model design and business logic for the Gag
 ## Next Steps
 - Implement models and migrations for the above structure.
 - Develop the callback/service for notification generation within `Gaggle::Message`.
+- Update the code so that we have the ability to send messages in threads and send notifications based on those messages and who is in the threads.
 - Update the changelog and create any necessary ADR entries.

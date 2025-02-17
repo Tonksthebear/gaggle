@@ -20,6 +20,11 @@
 - **Association Simplification:** Relationships are derived from message data, eliminating the need for dedicated join tables or polymorphic associations.
 - **Notification Workflow:** Clearly defined rules for how and when notifications are generated, minimizing complexity during development.
 
+## Current Status
+- Gaggle::Session managing the running executables
+- Removed that model from autoload so that the class variables don't get reset whenever a file gets saved
+- Full session management from starting the executable, viewing the session, messaging the session, and stopping the session
+
 ## Next Steps
 1. Implement database migrations for:
    - `gaggle_gooses`
@@ -28,8 +33,9 @@
    - `gaggle_notifications`
 2. Develop the corresponding model classes based on the design.
 3. Create callbacks or service objects within `Gaggle::Message` to trigger notification generation.
-4. Write tests to cover model validations, associations, and notification logic.
-5. Update supporting documentation (CHANGELOG, ADRs) as the implementation evolves.
+4. Update the code so that we have the ability to send messages in threads and send notifications based on those messages and who is in the threads
+5. Write tests to cover model validations, associations, and notification logic.
+6. Update supporting documentation (CHANGELOG, ADRs) as the implementation evolves.
 
 ## Notes
 - This design is targeted for development purposes and may evolve as implementation progresses.

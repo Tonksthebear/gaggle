@@ -23,6 +23,12 @@ Follow template in /docs/adr/template.md
 - StimulusJS, TailwindCSS, and Turbo.js are all used on the front end
 - Turbo streams are used for live updating of web pages
 
+## Session Management
+
+- Gaggle::Session manages the running executables.
+- The Gaggle::Session model was removed from autoload to prevent class variable resets on file saves.
+- Full session management is implemented, including starting, viewing, messaging, and stopping sessions.
+
 ## Testing Standards
 
 - Tests are minitest
