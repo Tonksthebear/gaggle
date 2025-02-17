@@ -33,3 +33,5 @@ gem "classy-yaml", "~> 1.3"
 gem "erb-formatter", "~> 0.7.3"
 
 gem "web-console", "~> 4.2"
+
+gem "jbuilder", "~> 2.13"

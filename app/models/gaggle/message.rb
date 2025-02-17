@@ -13,6 +13,10 @@ module Gaggle
 
     after_create :generate_notifications
 
+    def user_name
+      goose&.name || "User"
+    end
+
     private
 
     def generate_notifications

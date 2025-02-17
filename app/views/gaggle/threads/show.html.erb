@@ -16,7 +16,7 @@
 </div>
 
 <div id="new-message">
-  <%= form_with(model: [@thread, Gaggle::Message.new], local: true) do |form| %>
+  <%= form_with(model: [@thread, Gaggle::Message.new]) do |form| %>
     <div>
       <%= form.text_area :content, rows: 3, placeholder: "Type your message here...", class: "w-full p-2 border border-gray-300 rounded" %>
     </div>

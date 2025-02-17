@@ -2,6 +2,8 @@ module Gaggle
   class ThreadsController < ApplicationController
     before_action :set_thread
 
+    def index; end
+
     def show; end
 
     def new; end
@@ -37,7 +39,7 @@ module Gaggle
     private
 
     def set_thread
-      @thread = Gaggle::Thread.find_by(id: params[:id]) || Gaggle::Thread.new
+      @thread = Gaggle::Thread.includes(messages: :goose).find_by(id: params[:id] || params[:thread_id]) || Gaggle::Thread.new
     end
 
     def thread_params

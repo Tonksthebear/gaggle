@@ -5,7 +5,7 @@ module Gaggle
     def show; end
 
     def update
-      @session.write_to_exececutable(session_params[:input])
+      @session.write_to_executable(session_params[:input])
       redirect_to @session
     end
 

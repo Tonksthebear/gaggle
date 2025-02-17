@@ -10,7 +10,7 @@
   <!-- Output display for the running executable -->
 
   <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto">
-    <pre><code id="<%= dom_id(@session, :code) %>"><%= @session&.output || "No output available..." %></code></pre>
+    <pre><code id="<%= dom_id(@session, :code) %>"><%= simple_format(@session&.output || "No output available...") %></code></pre>
   </div>
 
   <% if @session.running? %>

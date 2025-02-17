@@ -15,14 +15,14 @@ module Gaggle
       @@running_executables[to_global_id] = ::Thread.new do
         Rails.logger.info "Starting executable for: #{goose.name}"
         Open3.popen3("goose session") do |stdin, stdout, stderr, wait_thr|
-          ::Thread.current[:input] = stdin
+          ::Thread.current[:stdin] = stdin
           @stdout = stdout
           @stderr = stderr
           @pid = wait_thr.pid
 
           begin
             while (line = @stdout.gets)
-              output << line
+              output << line.gsub(/\e\[[0-9;]*m/, "")
               save
             end
           rescue IOError => e
@@ -32,9 +32,10 @@ module Gaggle
       end
     end
 
-    def write_to_exececutable(input)
+    def write_to_executable(input)
       if thread = @@running_executables[to_global_id]
-        thread[:input].puts(input)
+
+        thread[:stdin].write(input.gsub("\n", "__NEWLINE_PLACEHOLDER__") + "\n")
       else
         Rails.logger.error "No running executable found for session #{to_global_id}"
       end

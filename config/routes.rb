@@ -2,10 +2,10 @@ Gaggle::Engine.routes.draw do
   root to: "threads#index"
 
   resources :threads do
-    resources :messages, only: [ :new, :create ], module: :threads
+    resources :messages, only: [ :create ], module: :threads
   end
 
-  resources :messages, except: [ :new, :create ]
+  resources :messages, only: [ :destroy ]
 
   resources :gooses do
     scope module: :gooses do
