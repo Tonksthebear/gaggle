@@ -21,7 +21,7 @@ gem "solid_cache", "~> 1.0"
 
 gem "solid_cable", "~> 3.0"
 
-gem "importmap-rails", "~> 2.0"
+gem "importmap-rails", "~> 2.1"
 
 gem "turbo-rails", "~> 2.0"
 
