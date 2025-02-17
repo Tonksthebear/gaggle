@@ -1,4 +1,26 @@
-  <% @sessions.each do |session| %>
-    <%= link_to "Session", session, class: yass(btn: :gray) %>
-  <% end %>
-  <%= button_to "Start Session", goose_sessions_path(@goose), class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+<table class="w-full border-collapse">
+  <thead>
+    <tr class="bg-gray-100">
+      <th class="border px-4 py-2">Session</th>
+      <th class="border px-4 py-2">Created At</th>
+      <th class="border px-4 py-2">Updated At</th>
+      <th class="border px-4 py-2">Running</th>
+      <th class="border px-4 py-2">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sessions.each do |session| %>
+      <tr class="hover:bg-gray-50">
+        <td class="border px-4 py-2">Session <%= session.id %></td>
+        <td class="border px-4 py-2"><%= session.created_at.strftime("%Y-%m-%d %H:%M") if session.created_at %></td>
+        <td class="border px-4 py-2"><%= session.updated_at.strftime("%Y-%m-%d %H:%M") if session.updated_at %></td>
+        <td class="border px-4 py-2"><%= session.running? ? "Yes" : "No" %></td>
+        <td class="border px-4 py-2"><%= link_to "View", session, class: yass(btn: :gray) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="mt-4">
+  <%= button_to "Start Session", goose_sessions_path(@goose), class: yass(btn: :blue) %>
+</div>

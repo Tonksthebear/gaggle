@@ -28,12 +28,20 @@ module Gaggle
       app.config.importmap.cache_sweepers << Engine.root.join("app/gaggle/javascript")
     end
 
-    initializer "gaggle.importmap.assets" do
-      Rails.application.config.assets.paths << Engine.root.join("app/javascript")
+    initializer "gaggle.importmap.assets" do |app|
+      app.config.assets.paths << Engine.root.join("app/javascript")
     end
 
-    initializer "gaggle.migrations" do
-      Rails.application.config.paths["db/migrate"] << Gaggle::Engine.root.join("db/migrate_gaggle")
+    initializer "gaggle.migrations" do |app|
+      app.config.paths["db/migrate"] << Gaggle::Engine.root.join("db/migrate_gaggle")
+    end
+
+    initializer "gaggle.autoloader" do |app|
+      Rails.autoloaders.main.ignore(Gaggle::Engine.root.join("app/models/gaggle/session.rb"))
+
+      app.config.after_initialize do
+        require Gaggle::Engine.root.join("app/models/gaggle/session.rb")
+      end
     end
   end
 end
