@@ -9,6 +9,9 @@
   <div class="flex space-x-4">
     <%= link_to "Edit", edit_goose_path(@goose), class: yass(btn: :blue) %>
     <%= link_to "Sessions", goose_sessions_path(@goose), class: yass(btn: :gray) %>
+    <% if session = @goose.sessions.running.first %>
+      <%= link_to "Active Session", session, class: yass(btn: :success) if @goose.sessions.running.any? %>
+    <% end %>
   </div>
 
 </div>

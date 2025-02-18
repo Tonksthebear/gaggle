@@ -37,3 +37,5 @@ gem "web-console", "~> 4.2"
 gem "jbuilder", "~> 2.13"
 
 gem "solid_cable", "~> 3.0"
+
+gem "strings-ansi", "~> 0.2.0"

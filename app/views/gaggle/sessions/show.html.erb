@@ -10,7 +10,7 @@
   <!-- Output display for the running executable -->
 
   <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto flex flex-col-reverse">
-    <pre><code id="<%= dom_id(@session, :code) %>"><%= File.read(@session.log_file) rescue "No output available..." %></code></pre>
+    <pre><code id="<%= dom_id(@session, :code) %>"><%= Strings::ANSI.sanitize(File.read(@session.log_file)) rescue "No output available..." %></code></pre>
   </div>
 
   <% if @session.running? %>

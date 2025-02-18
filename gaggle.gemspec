@@ -13,7 +13,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tailwindcss-rails"
   spec.add_dependency "importmap-rails"
   spec.add_dependency "classy-yaml"
-  spec.add_dependency "jbuilder"
+  spec.add_dependency "strings-ansi"
+
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.

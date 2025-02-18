@@ -20,17 +20,17 @@ module Gaggle
           log_file_path = Rails.root.join(self.log_file)
           FileUtils.mkdir_p(File.dirname(log_file_path))
           FileUtils.touch(log_file_path)
-          session_logger = Logger.new(log_file_path)
-          session_logger.info "Session started"
+          ::Thread.current[:logger] = Logger.new(log_file_path)
+          ::Thread.current[:logger].info "Session started"
           save!
 
           begin
             while (line = @stdout.gets)
-              session_logger.info line
-              broadcast_append target: dom_id(self, :code), content: line
+              ::Thread.current[:logger].info line
+              broadcast_append target: dom_id(self, :code), content: Strings::ANSI.sanitize(line)
             end
           rescue IOError => e
-            Rails.logger.error "Output stream closed: #{e.message}"
+            ::Thread.current[:logger].error "Output stream closed: #{e.message}"
           end
         end
       end
@@ -39,6 +39,9 @@ module Gaggle
     def write_to_executable(input)
       if thread = @@running_executables[to_global_id]
 
+
+        thread[:logger].info "Sending input: #{input}"
+        broadcast_append target: dom_id(self, :code), content: Strings::ANSI.sanitize(input)
         thread[:stdin].write(input.gsub("\n", "__NEWLINE_PLACEHOLDER__") + "\n")
       else
         Rails.logger.error "No running executable found for session #{to_global_id}"

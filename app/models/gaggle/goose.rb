@@ -29,9 +29,9 @@ module Gaggle
            Replace {id} with the actual thread ID.
 
         3. To post a message in a thread:
-           bin/rails gaggle:send_message thread_id={id} content={content}
+           bin/rails gaggle:send_message thread_id={id} content="{content}"
            Replace {id} with thread id and {content} with the content of the message
-           Everything MUST BE ESCAPED in the content field so that the rails command sees it as a single argument.
+           BE SURE to escape anything that may break out of the surrounding quotation marks. It needs to all be delivered as a single argument.
 
         4. To create a new thread:
            bin/rails gaggle:create_thread name="{name}"
