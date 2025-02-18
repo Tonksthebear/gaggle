@@ -22,10 +22,14 @@ module Gaggle
           @stderr = stderr
           @pid = wait_thr.pid
 
+          path = Rails.root.join("log", "gaggle", "goose_#{goose.id}", "#{Time.now.iso8601}.log")
+          FileUtils.mkdir_p(File.dirname(path))
+          FileUtils.touch(path)
+          session_logger = Logger.new(path)
+          session_logger.info "Session started"
           begin
             while (line = @stdout.gets)
-              output << line.gsub(/\e\[[0-9;]*m/, "")
-              save
+              session_logger.info line
             end
           rescue IOError => e
             Rails.logger.error "Output stream closed: #{e.message}"

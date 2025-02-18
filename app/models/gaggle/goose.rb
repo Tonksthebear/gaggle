@@ -19,6 +19,7 @@ module Gaggle
         Responses from these commands will be in JSON format.
         Do not forget this: Your unique goose_id is #{id}.
         Do not forget your name is #{name}.
+        Remember: The user can only communicate through messages, so no need to put a thoughts in the console.
 
         1. To get a list of thread names and their IDs:
            bin/rails gaggle:get_threads
