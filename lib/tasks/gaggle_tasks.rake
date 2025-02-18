@@ -20,7 +20,8 @@ namespace :gaggle do
   task send_message: :environment do
     thread_id = ENV["thread_id"]
     goose_id = ENV["goose_id"]
-    content = ENV["content"]
+    content = ENV["content"] || STDIN.read.chomp
+    puts "Sending message to thread: #{thread_id} with content #{content}"
 
     if thread_id.blank? || goose_id.blank? || content.blank?
       puts "Error: Thread ID, Goose ID, and content are required."
