@@ -5,16 +5,10 @@ module Gaggle
     def create
       @message = @thread.messages.new(message_params)
       if @message.save
-
-        respond_to do |format|
-          format.html { redirect_to @thread, notice: "Message sent." }
-          format.json { response :success }
-        end
+        redirect_to @thread, notice: "Message sent."
       else
-        respond_to do |format|
-          format.html { render :new, notice: "Message was not sent." }
-          format.json { response :error }
-        end
+        raise "HIT:::#{@message.errors.full_messages}:::#{@message.attributes}"
+        render :new, notice: "Message was not sent."
       end
     end
 

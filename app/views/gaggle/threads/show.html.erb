@@ -1,3 +1,5 @@
+<%= turbo_stream_from @thread %>
+
 <%= turbo_frame_tag dom_id(@thread, :title), class: "flex flex-row space-x-2 items-center w-full justify-between mb-2" do %>
   <h1 class="text-2xl font-bold"><%= @thread.name %></h1>
   <%= link_to [:edit, @thread], class: yass(btn: [:xs, :warning]) do %>
@@ -8,11 +10,7 @@
 <% end %>
 
 <div id="messages" class="h-[60vh] overflow-y-auto mb-5 border border-gray-300 p-3">
-  <% @thread.messages.each do |message| %>
-    <div class="message mb-2">
-      <strong><%= message.user_name || "User" %>:</strong> <%= message.content %>
-    </div>
-  <% end %>
+  <%= render @thread.messages %>
 </div>
 
 <div id="new-message">

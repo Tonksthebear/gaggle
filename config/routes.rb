@@ -1,5 +1,5 @@
 Gaggle::Engine.routes.draw do
-  root to: "threads#index"
+  root to: "overviews#show"
 
   resources :threads do
     resources :messages, only: [ :create ], module: :threads

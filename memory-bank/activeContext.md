@@ -72,3 +72,11 @@ This document summarizes the current model design and business logic for the Gag
 - Develop the callback/service for notification generation within `Gaggle::Message`.
 - Update the code so that we have the ability to send messages in threads and send notifications based on those messages and who is in the threads.
 - Update the changelog and create any necessary ADR entries.
+
+## Rails Tasks
+- The following Rails tasks have been created to allow external interaction with the Gaggle engine:
+  - `gaggle:create_thread`: Creates a new thread with a given name. Returns JSON output with `status` and `message`.
+  - `gaggle:send_message`: Sends a message to a specific thread from a given Goose. Requires `thread_id`, `goose_id`, and `content` environment variables. Returns JSON output with `status` and `message`.
+  - `gaggle:get_thread_messages`: Retrieves all messages from a specific thread. Requires `thread_id` environment variable. Returns JSON output with `content` and `user_name` for each message.
+  - `gaggle:get_goose_notifications`: Retrieves all notifications for a specific Goose. Requires `goose_id` environment variable. Returns JSON output.
+  - `gaggle:get_threads`: Retrieves all threads. Returns JSON output.

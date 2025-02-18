@@ -20,22 +20,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_225000) do
 
   create_table "gaggle_messages", force: :cascade do |t|
     t.text "content", null: false
-    t.integer "gaggle_thread_id", null: false
-    t.integer "gaggle_goose_id"
+    t.integer "thread_id", null: false
+    t.integer "goose_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gaggle_goose_id"], name: "index_gaggle_messages_on_gaggle_goose_id"
-    t.index ["gaggle_thread_id"], name: "index_gaggle_messages_on_gaggle_thread_id"
+    t.index ["goose_id"], name: "index_gaggle_messages_on_goose_id"
+    t.index ["thread_id"], name: "index_gaggle_messages_on_thread_id"
   end
 
   create_table "gaggle_notifications", force: :cascade do |t|
-    t.integer "gaggle_message_id", null: false
-    t.integer "gaggle_goose_id"
+    t.integer "message_id"
+    t.integer "goose_id"
     t.datetime "read_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gaggle_goose_id"], name: "index_gaggle_notifications_on_gaggle_goose_id"
-    t.index ["gaggle_message_id"], name: "index_gaggle_notifications_on_gaggle_message_id"
+    t.index ["goose_id"], name: "index_gaggle_notifications_on_goose_id"
+    t.index ["message_id"], name: "index_gaggle_notifications_on_message_id"
   end
 
   create_table "gaggle_sessions", force: :cascade do |t|
@@ -52,9 +52,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_225000) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "gaggle_messages", "gaggle_gooses"
-  add_foreign_key "gaggle_messages", "gaggle_threads"
-  add_foreign_key "gaggle_notifications", "gaggle_gooses"
-  add_foreign_key "gaggle_notifications", "gaggle_messages"
+  add_foreign_key "gaggle_messages", "gaggle_gooses", column: "goose_id"
+  add_foreign_key "gaggle_messages", "gaggle_threads", column: "thread_id"
+  add_foreign_key "gaggle_notifications", "gaggle_gooses", column: "goose_id"
+  add_foreign_key "gaggle_notifications", "gaggle_messages", column: "message_id"
   add_foreign_key "gaggle_sessions", "gaggle_gooses", column: "goose_id"
 end

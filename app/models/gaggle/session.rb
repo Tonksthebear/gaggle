@@ -7,6 +7,8 @@ module Gaggle
 
     after_update_commit :update_output
 
+    scope :running, -> { all.select { |session| session.running? } }
+
     def update_output
       broadcast_update target: dom_id(self, :code), content: output
     end

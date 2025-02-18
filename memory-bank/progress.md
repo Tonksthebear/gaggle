@@ -36,6 +36,13 @@
 4. Update the code so that we have the ability to send messages in threads and send notifications based on those messages and who is in the threads
 5. Write tests to cover model validations, associations, and notification logic.
 6. Update supporting documentation (CHANGELOG, ADRs) as the implementation evolves.
+7. Implemented Rails tasks for external interaction with the Gaggle engine:
+   - `gaggle:create_thread` (returns JSON output)
+   - `gaggle:send_message` (requires environment variables, returns JSON output)
+   - `gaggle:get_thread_messages` (requires environment variable, returns JSON output)
+   - `gaggle:get_goose_notifications` (requires environment variable, returns JSON output)
+   - `gaggle:get_threads` (returns JSON output)
+- Updated the `app/views/gaggle/overviews/show.html.erb` file to include a welcome page with instructions to create a Goose using the left sidebar. The welcome page is styled with Tailwind CSS.
 
 ## Notes
 - This design is targeted for development purposes and may evolve as implementation progresses.

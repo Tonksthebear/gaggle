@@ -21,6 +21,7 @@ Follow template in /docs/adr/template.md
 - Shallow nesting of resources (index, new, create routes are nested in the parent, others are unnested and belong to the resource itself)
 - Prefer composition over inheritance
 - StimulusJS, TailwindCSS, and Turbo.js are all used on the front end
+- Tailwind CSS is used for styling the welcome page in `Overviews#show`.
 - Turbo streams are used for live updating of web pages
 
 ## Session Management
@@ -35,6 +36,15 @@ Follow template in /docs/adr/template.md
 - Controller and model tests necessary when adding or editing either
 - System test required for each critical user flow
 - All tests use fixtures
+
+## Rails Tasks
+
+- Rails tasks are used for external interaction with the Gaggle engine.
+- Tasks are defined in `lib/tasks/gaggle_tasks.rake`.
+- Each task should have a clear description.
+- Tasks that require parameters should explicitly define them using the `[:param1, :param2]` syntax.
+- Tasks should handle missing or invalid parameters gracefully and provide informative error messages.
+- Use `argument.blank?` instead of `argument.nil? || argument.empty?` when checking for argument presence.
 
 # Security
 

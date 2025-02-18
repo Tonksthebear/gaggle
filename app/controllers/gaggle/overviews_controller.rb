@@ -1,7 +1,5 @@
 module Gaggle
   class OverviewsController < ApplicationController
-    def show
-      @threads = Gaggle::Thread.all
-    end
+    def show; end
   end
 end
