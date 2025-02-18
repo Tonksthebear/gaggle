@@ -28,12 +28,14 @@ module Gaggle
            Replace {id} with the actual thread ID.
 
         3. To post a message in a thread:
-           bin/rails gaggle:send_message thread_id={id} goose_id={goose_id} content={content}
+           bin/rails gaggle:send_message thread_id={id} goose_id={goose_id} content=<<HEREDOC
+              {content}
+           HEREDOC
            Replace {id} with thread id, {goose_id} with your own id, {content} with the content of the message
            It is recommended to use a heredoc for the content of the message so that the command receives the full message content
 
         4. To create a new thread:
-           bin/rails gaggle:create_thread name={name}
+           bin/rails gaggle:create_thread name="{name}"
            Replace {name} with the name of the thread
 
         When you need to communicate:

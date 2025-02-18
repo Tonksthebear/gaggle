@@ -1,5 +1,5 @@
 <%# locals: (message:) %>
 
-<div id="<%= dom_id(message) %>" class="m-2">
-  <strong><%= message.user_name || "User" %>:</strong> <%= message.content %>
+<div id="<%= dom_id(message) %>" class="m-2 prose">
+  <strong><%= message.user_name || "User" %>:</strong><%= simple_format(message.content) %>
 </div>
