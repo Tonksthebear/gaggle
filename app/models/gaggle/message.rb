@@ -38,7 +38,7 @@ module Gaggle
     end
 
     def broadcast_create
-      broadcast_append_to thread, target: "messages"
+      broadcast_prepend_to thread, target: "messages"
     end
   end
 end

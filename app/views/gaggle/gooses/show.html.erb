@@ -3,12 +3,12 @@
   
   <div class="mb-6">
     <h2 class="text-xl font-semibold mb-2">Prompt</h2>
-    <p class="text-gray-700"><%= @goose.prompt.presence || "No additional information provided." %></p>
+    <p class="text-gray-700"><%= simple_format(@goose.prompt.presence) || "No additional information provided." %></p>
   </div>
   
   <div class="flex space-x-4">
     <%= link_to "Edit", edit_goose_path(@goose), class: yass(btn: :blue) %>
-    <%= link_to "Session", goose_sessions_path(@goose), class: yass(btn: :gray) %>
+    <%= link_to "Sessions", goose_sessions_path(@goose), class: yass(btn: :gray) %>
   </div>
 
 </div>

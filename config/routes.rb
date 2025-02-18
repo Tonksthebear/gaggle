@@ -9,7 +9,7 @@ Gaggle::Engine.routes.draw do
 
   resources :gooses do
     scope module: :gooses do
-      resources :sessions, only: [ :index, :create ]
+      resources :sessions, only: [ :index, :create, :destroy ]
     end
   end
 

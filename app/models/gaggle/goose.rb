@@ -29,14 +29,21 @@ module Gaggle
            Replace {id} with the actual thread ID.
 
         3. To post a message in a thread:
-           bin/rails gaggle:send_message thread_id={id} goose_id={goose_id} content={content}
-           Replace {id} with thread id, {goose_id} with your own id, {content} with the content of the message
+           bin/rails gaggle:send_message thread_id={id} content={content}
+           Replace {id} with thread id and {content} with the content of the message
            Everything MUST BE ESCAPED in the content field so that the rails command sees it as a single argument.
-
 
         4. To create a new thread:
            bin/rails gaggle:create_thread name="{name}"
            Replace {name} with the name of the thread
+
+        4. To update the name of a thread:
+           bin/rails gaggle:update_thread thread_id={id} name="{name}"
+           Replace {id} with thread id and {name} with the new name
+
+        5. To delete a thread:
+           bin/rails gaggle:delete_thread thread_id={id}
+           Replace {id} with thread id
 
         When you need to communicate:
         1. First, check existing threads

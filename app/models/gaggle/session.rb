@@ -3,33 +3,31 @@ module Gaggle
     @@running_executables = {}
     belongs_to :goose
 
-    attribute :output, :text, default: ""
-
-    after_update_commit :update_output
+    attribute :log_file, :string, default: ""
 
     scope :running, -> { all.select { |session| session.running? } }
-
-    def update_output
-      broadcast_update target: dom_id(self, :code), content: output
-    end
 
     def start_executable
       @@running_executables[to_global_id] = ::Thread.new do
         Rails.logger.info "Starting executable for: #{goose.name}"
-        Open3.popen3("goose session") do |stdin, stdout, stderr, wait_thr|
+        Open3.popen3({ "GOOSE_ID" => goose.id.to_s }, "goose session") do |stdin, stdout, stderr, wait_thr|
           ::Thread.current[:stdin] = stdin
           @stdout = stdout
           @stderr = stderr
           @pid = wait_thr.pid
 
-          path = Rails.root.join("log", "gaggle", "goose_#{goose.id}", "#{Time.now.iso8601}.log")
-          FileUtils.mkdir_p(File.dirname(path))
-          FileUtils.touch(path)
-          session_logger = Logger.new(path)
+          self.log_file = "log/gaggle/goose_#{goose.id}/#{Time.now.iso8601}.log"
+          log_file_path = Rails.root.join(self.log_file)
+          FileUtils.mkdir_p(File.dirname(log_file_path))
+          FileUtils.touch(log_file_path)
+          session_logger = Logger.new(log_file_path)
           session_logger.info "Session started"
+          save!
+
           begin
             while (line = @stdout.gets)
               session_logger.info line
+              broadcast_append target: dom_id(self, :code), content: line
             end
           rescue IOError => e
             Rails.logger.error "Output stream closed: #{e.message}"

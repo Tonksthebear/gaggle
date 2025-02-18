@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_225000) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_18_170424) do
   create_table "gaggle_gooses", force: :cascade do |t|
     t.string "name", null: false
     t.text "prompt"
@@ -40,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_225000) do
 
   create_table "gaggle_sessions", force: :cascade do |t|
     t.integer "goose_id", null: false
-    t.text "output"
+    t.string "log_file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goose_id"], name: "index_gaggle_sessions_on_goose_id"

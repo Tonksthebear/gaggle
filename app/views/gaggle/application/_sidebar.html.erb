@@ -55,18 +55,8 @@
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" class="-mx-2 space-y-1">
-                  <% threads.each do |thread| %>
-                    <li>
-                      <%= link_to thread, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
-                        <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                        </svg>
-                        <span class="<%= dom_id(thread, :title) %>"><%= thread.name %></span>
-                      <% end %>
-                    </li>
-                  <% end %>
-
-                  <%= link_to new_thread_path, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
+                  <%= render threads %>
+                  <%= link_to new_thread_path, class: "new-thread group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                     <!-- folder-plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 shrink-0 text-indigo-200 group-hover:text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
@@ -123,19 +113,9 @@
       <nav class="flex flex-1 flex-col">
         <ul role="list" class="flex flex-1 flex-col gap-y-7">
           <li>
-            <ul role="list" class="-mx-2 space-y-1">
-              <% threads.each do |thread| %>
-                <li>
-                  <%= link_to thread, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
-                    <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-                    <span class="<%= dom_id(thread, :title) %>"><%= thread.name %></span>
-                  <% end %>
-                </li>
-              <% end %>
-                
-              <%= link_to new_thread_path, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
+            <ul role="list" thread-list-sidebar class="-mx-2 space-y-1">
+              <%= render threads %>
+              <%= link_to new_thread_path, class: "new-thread group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                 <!-- folder-plus -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 shrink-0 text-indigo-200 group-hover:text-white">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
@@ -150,10 +130,23 @@
               <% @geese.each do |goose| %>
                 <li>
                   <!-- Current: "bg-indigo-700 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-700" -->
-                  <%= link_to goose, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
-                    <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white"><%= goose.name[0] %></span>
-                    <%= goose.name %>
-                  <% end %>
+                  <div class="group flex items-center gap-x-3 rounded-md text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white">
+                    <%= link_to goose, class: "flex-1 flex flex-row items-center space-x-2 p-2 my-2" do %>
+                      <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white"><%= goose.name[0] %></span>
+                      <span>
+                      <%= goose.name %>
+                      </span>
+                    <% end %>
+                    <% if session = goose.sessions.running.first %>
+                      <%= button_to session, method: :delete, class: yass(btn: :danger), data: { turbo_confirm: "Are you sure you want to stop this session?" } do %>
+                        Stop
+                      <% end %>
+                    <% else %>
+                      <%= button_to goose_sessions_path(goose), class: yass(btn: :success) do %>
+                        Start
+                      <% end %>
+                    <% end %>
+                  </div>
                 </li>
               <% end %>
               <%= link_to new_goose_path, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>

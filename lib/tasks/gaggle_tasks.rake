@@ -16,10 +16,45 @@ namespace :gaggle do
     end
   end
 
+  desc "Updates a thread with a given name"
+  task update_thread: :environment do
+    thread_id = ENV["thread_id"]
+    name = ENV["name"]
+
+    if thread_id.blank? || name.blank?
+      puts "Error: Thread ID and name are required."
+    else
+      thread = Gaggle::Thread.find(thread_id)
+      thread.update(name: name)
+      message = {
+        status: "success",
+        message: "Updated thread with ID: #{thread.id} and name: #{thread.name}"
+      }
+      puts JSON.generate(message)
+    end
+  end
+
+  desc "Deletes a thread with a given ID"
+  task delete_thread: :environment do
+    thread_id = ENV["thread_id"]
+
+    if thread_id.blank?
+      puts "Error: Thread ID is required."
+    else
+      thread = Gaggle::Thread.find(thread_id)
+      thread.destroy
+      message = {
+        status: "success",
+        message: "Deleted thread with ID: #{thread.id}"
+      }
+      puts JSON.generate(message)
+    end
+  end
+
   desc "Sends a message to a specific thread from a given Goose"
   task send_message: :environment do
     thread_id = ENV["thread_id"]
-    goose_id = ENV["goose_id"]
+    goose_id = ENV["GOOSE_ID"]
     content = ENV["content"] || STDIN.read.chomp
     puts "Sending message to thread: #{thread_id} with content #{content}"
 
@@ -55,7 +90,7 @@ namespace :gaggle do
 
   desc "Retrieves all notifications for a specific Goose"
   task get_goose_notifications: :environment do
-    goose_id = ENV["goose_id"]
+    goose_id = ENV["GOOSE_ID"]
 
     if goose_id.blank?
       puts "Error: Goose ID is required."

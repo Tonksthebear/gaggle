@@ -43,6 +43,8 @@
    - `gaggle:get_goose_notifications` (requires environment variable, returns JSON output)
    - `gaggle:get_threads` (returns JSON output)
 - Updated the `app/views/gaggle/overviews/show.html.erb` file to include a welcome page with instructions to create a Goose using the left sidebar. The welcome page is styled with Tailwind CSS.
+- Modified the sessions table to label sessions by their number instead of their ID.
+- Reverted the change to make the sessions table scrollable.
 
 ## Notes
 - This design is targeted for development purposes and may evolve as implementation progresses.

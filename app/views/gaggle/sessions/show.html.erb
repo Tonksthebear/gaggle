@@ -9,8 +9,8 @@
   <h1 class="text-2xl font-bold mb-4">Executable Console</h1>
   <!-- Output display for the running executable -->
 
-  <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto">
-    <pre><code id="<%= dom_id(@session, :code) %>"><%= simple_format(@session&.output || "No output available...") %></code></pre>
+  <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto flex flex-col-reverse">
+    <pre><code id="<%= dom_id(@session, :code) %>"><%= File.read(@session.log_file) rescue "No output available..." %></code></pre>
   </div>
 
   <% if @session.running? %>
