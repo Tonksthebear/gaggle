@@ -8,7 +8,7 @@ module Gaggle
     scope :running, -> { all.select { |session| session.running? } }
 
     def start_executable
-      @@running_executables[to_global_id] = ::Thread.new do
+      @@running_executables[to_global_id] = Thread.new do
         Rails.logger.info "Starting executable for: #{goose.name}"
         Open3.popen3({ "GOOSE_ID" => goose.id.to_s }, "goose session") do |stdin, stdout, stderr, wait_thr|
           Thread.current[:stdin] = stdin
