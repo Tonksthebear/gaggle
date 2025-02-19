@@ -11,6 +11,7 @@ This document summarizes the current model design and business logic for the Gag
   - `prompt` (text)
 - **Associations:**
   - Has many `Gaggle::Message` records.
+  - Has many `Gaggle::Notification` records.
 - **Notes:**
   - There is no direct association with threads. Thread participation is inferred from which geese have sent messages.
 
@@ -40,9 +41,12 @@ This document summarizes the current model design and business logic for the Gag
   - `read_at` (timestamp, indicates when the notification was seen)
   - `message_id` (foreign key to the triggering message)
   - `goose_id` (foreign key to `Gaggle::Goose`; optional – a nil value implies the notification is for the user)
+  - `messageable_id` (foreign key to the triggering message or thread)
+  - `messageable_type` (string, the class name of the messageable object)
 - **Associations:**
+  - Belongs to a `Gaggle::Goose` (optional)
   - Belongs to a `Gaggle::Message`
-  - Optionally belongs to a `Gaggle::Goose`
+  - Belongs to a `messageable`, polymorphic: true
 
 ## Key Design Decisions
 - **Namespacing:** All models are defined under the `Gaggle` module to avoid conflicts and ensure smooth integration with host applications.

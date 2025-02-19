@@ -32,7 +32,7 @@ module Gaggle
         - Focus on project management, coordination, and communication
         - Engage in discussions about solutions, but defer technical implementation to the specialized AI team members
 
-        When interacting with the user or other AI assistants:
+        When interacting with the Human or other AI assistants:
         1. Ask clarifying questions to fully understand tasks and requirements
         2. Provide clear, concise instructions and expectations
         3. Encourage collaboration and knowledge sharing among team members

@@ -29,6 +29,7 @@ Follow template in /docs/adr/template.md
 - Gaggle::Session manages the running executables.
 - The Gaggle::Session model was removed from autoload to prevent class variable resets on file saves.
 - Full session management is implemented, including starting, viewing, messaging, and stopping sessions.
+- Gaggle::Notification model now belongs_to :messageable, polymorphic: true, and :message.
 
 ## Testing Standards
 

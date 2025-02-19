@@ -2,7 +2,9 @@ module Gaggle
   class Thread < ApplicationRecord
     self.table_name = "gaggle_threads"
 
-    has_many :messages, class_name: "Gaggle::Message", dependent: :destroy
+    has_many :messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
+    has_many :geese, -> { distinct }, class_name: "Gaggle::Goose", through: :messages, source: :goose
+    has_many :notifications, class_name: "Gaggle::Notification", dependent: :destroy, as: :messageable
 
     validates :name, presence: true
 

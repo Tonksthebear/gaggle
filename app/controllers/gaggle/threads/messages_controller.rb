@@ -7,7 +7,6 @@ module Gaggle
       if @message.save
         redirect_to @thread, notice: "Message sent."
       else
-        raise "HIT:::#{@message.errors.full_messages}:::#{@message.attributes}"
         render :new, notice: "Message was not sent."
       end
     end
