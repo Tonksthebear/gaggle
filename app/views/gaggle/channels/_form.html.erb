@@ -1,11 +1,11 @@
-  <%# locals: (thread:) %>
+  <%# locals: (channel:) %>
 
-  <%= form_with model: thread, class: "space-y-4" do |form| %>
-    <% if @thread.errors.any? %>
+  <%= form_with model: channel, class: "space-y-4" do |form| %>
+    <% if @channel.errors.any? %>
       <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-        <h2 class="font-semibold"><%= pluralize(@thread.errors.count, "error") %> prohibited this thread from being saved:</h2>
+        <h2 class="font-semibold"><%= pluralize(@channel.errors.count, "error") %> prohibited this channel from being saved:</h2>
         <ul class="list-disc pl-5">
-          <% @thread.errors.full_messages.each do |msg| %>
+          <% @channel.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
         </ul>

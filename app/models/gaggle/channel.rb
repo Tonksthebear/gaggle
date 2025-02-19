@@ -1,6 +1,6 @@
 module Gaggle
-  class Thread < ApplicationRecord
-    self.table_name = "gaggle_threads"
+  class Channel < ApplicationRecord
+    self.table_name = "gaggle_channels"
 
     has_many :messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
     has_many :geese, -> { distinct }, class_name: "Gaggle::Goose", through: :messages, source: :goose
@@ -14,20 +14,20 @@ module Gaggle
 
     def broadcast_create
       broadcast_before_to "gaggle",
-      targets: ".new-thread",
+      targets: ".new-channel",
       content: ApplicationController.render(
-        partial: "gaggle/threads/thread",
-        locals: { thread: self }
+        partial: "gaggle/channels/channel",
+        locals: { channel: self }
       )
     end
 
     def broadcast_update
       broadcast_replace_to "gaggle",
         targets: ".#{dom_id(self, :sidebar)}",
-        partial: "gaggle/threads/thread",
+        partial: "gaggle/channels/channel",
         content: ApplicationController.render(
-          partial: "gaggle/threads/thread",
-          locals: { thread: self }
+          partial: "gaggle/channels/channel",
+          locals: { channel: self }
         )
     end
 

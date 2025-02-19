@@ -1,5 +1,5 @@
-<%= turbo_frame_tag dom_id(@thread, :title), class: "flex flex-row space-x-2 items-center w-full justify-between mb-2" do %>
-  <%= form_with model: @thread, class: "flex flex-row space-x-2 items-center w-full justify-between" do |form| %>
+<%= turbo_frame_tag dom_id(@channel, :title), class: "flex flex-row space-x-2 items-center w-full justify-between mb-2" do %>
+  <%= form_with model: @channel, class: "flex flex-row space-x-2 items-center w-full justify-between" do |form| %>
     <%= form.text_field :name, class: "text-2xl font-bold flex-grow p-2 border border-gray-300 rounded" %>
     <%= button_tag class: yass(btn: [:xs, :success]) do %>
       <%= form.submit '', class: 'hidden' %>

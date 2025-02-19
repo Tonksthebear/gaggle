@@ -20,7 +20,7 @@ module Gaggle
 
     def unread_messageable
       messages = case messageable
-      when Gaggle::Thread
+      when Gaggle::Channel
           messageable.messages.where(created_at: created_at..)
       when Gaggle::Goose
           messageable.messages.where(created_at: created_at..)

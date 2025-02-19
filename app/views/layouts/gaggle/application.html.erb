@@ -10,7 +10,7 @@
     <html class="h-full bg-white">
   <body class="h-full">
     <%= turbo_stream_from 'gaggle'%>
-    <%= render layout: 'sidebar', locals: { threads: @threads } do %>
+    <%= render layout: 'sidebar', locals: { channels: @channels } do %>
       <%= yield %>
     <% end %>
   </body>

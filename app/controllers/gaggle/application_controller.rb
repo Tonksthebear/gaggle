@@ -1,13 +1,13 @@
 module Gaggle
   class ApplicationController < ActionController::Base
     include ActionView::RecordIdentifier
-    before_action :set_threads
+    before_action :set_channels
     before_action :set_geese
 
     private
 
-    def set_threads
-      @threads = Gaggle::Thread.all
+    def set_channels
+      @channels = Gaggle::Channel.all
     end
 
     def set_geese

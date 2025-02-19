@@ -13,35 +13,35 @@ This document summarizes the current model design and business logic for the Gag
   - Has many `Gaggle::Message` records.
   - Has many `Gaggle::Notification` records.
 - **Notes:**
-  - There is no direct association with threads. Thread participation is inferred from which geese have sent messages.
+  - There is no direct association with channels. Channel participation is inferred from which geese have sent messages.
 
-### Gaggle::Thread
+### Gaggle::Channel
 - **Attributes:**
   - `name` (string)
 - **Associations:**
   - Has many `Gaggle::Message` records.
 - **Notes:**
-  - No direct connection to geese; participants are determined by the senders of messages in the thread.
+  - No direct connection to geese; participants are determined by the senders of messages in the channel.
 
 ### Gaggle::Message
 - **Attributes:**
   - `content` (text)
-  - `thread_id` (foreign key to Gaggle::Thread)
+  - `channel_id` (foreign key to Gaggle::Channel)
   - `goose_id` (foreign key to Gaggle::Goose; optional – a nil value indicates the message was sent by the user)
 - **Associations:**
-  - Belongs to a `Gaggle::Thread`
+  - Belongs to a `Gaggle::Channel`
   - Belongs to a `Gaggle::Goose` (optional)
 - **Business Logic:**
   - Upon creation, trigger notification generation:
-    - If `goose_id` is nil (message from the user), notify all geese that have previously sent messages in the thread.
-    - If the message content includes an "@goose_name" mention, generate a notification for that specific goose even if they haven't participated in the thread.
+    - If `goose_id` is nil (message from the user), notify all geese that have previously sent messages in the channel.
+    - If the message content includes an "@goose_name" mention, generate a notification for that specific goose even if they haven't participated in the channel.
 
 ### Gaggle::Notification
 - **Attributes:**
   - `read_at` (timestamp, indicates when the notification was seen)
   - `message_id` (foreign key to the triggering message)
   - `goose_id` (foreign key to `Gaggle::Goose`; optional – a nil value implies the notification is for the user)
-  - `messageable_id` (foreign key to the triggering message or thread)
+  - `messageable_id` (foreign key to the triggering message or channel)
   - `messageable_type` (string, the class name of the messageable object)
 - **Associations:**
   - Belongs to a `Gaggle::Goose` (optional)
@@ -52,20 +52,20 @@ This document summarizes the current model design and business logic for the Gag
 - **Namespacing:** All models are defined under the `Gaggle` module to avoid conflicts and ensure smooth integration with host applications.
 - **Association Simplification:** 
   - No polymorphic associations are used. 
-  - The relationship between threads and geese is derived from messages – there is no separate join table.
+  - The relationship between channels and geese is derived from messages – there is no separate join table.
 - **Notification Logic:**
   - Notifications are automatically generated after a message is created.
-  - For messages from the user (nil sender), all participating geese in the thread are notified.
+  - For messages from the user (nil sender), all participating geese in the channel are notified.
   - Specific @mentions in a message trigger targeted notifications.
 - **Database Migrations:**
-  - Tables will be prefixed appropriately (e.g., `gaggle_gooses`, `gaggle_threads`, `gaggle_messages`, `gaggle_notifications`) to avoid naming collisions in the host application.
+  - Tables will be prefixed appropriately (e.g., `gaggle_gooses`, `gaggle_channels`, `gaggle_messages`, `gaggle_notifications`) to avoid naming collisions in the host application.
 
 ## Completed Tasks
-- Implemented the thread creation flow:
-  - Updated the `Gaggle::ThreadsController` to include `new` and `create` actions.
-  - Created the `app/views/gaggle/threads/new.html.erb` view with a form to create new threads.
+- Implemented the channel creation flow:
+  - Updated the `Gaggle::ChannelsController` to include `new` and `create` actions.
+  - Created the `app/views/gaggle/channels/new.html.erb` view with a form to create new channels.
   - Styled the form using Tailwind CSS.
-  - Added an "Edit" button to the thread show view, styled with Tailwind CSS.
+  - Added an "Edit" button to the channel show view, styled with Tailwind CSS.
 - Implemented the Goose creation and edit flow:
   - Updated the `Gaggle::GooseController` to include full CRUD actions.
   - Created the profile view at `app/views/gaggle/gooses/show.html.erb`, and the new and edit views at `app/views/gaggle/goose/new.html.erb` and `app/views/gaggle/goose/edit.html.erb`.
@@ -76,13 +76,13 @@ This document summarizes the current model design and business logic for the Gag
 ## Next Steps
 - Implement models and migrations for the above structure.
 - Develop the callback/service for notification generation within `Gaggle::Message`.
-- Update the code so that we have the ability to send messages in threads and send notifications based on those messages and who is in the threads.
+- Update the code so that we have the ability to send messages in channels and send notifications based on those messages and who is in the channels.
 - Update the changelog and create any necessary ADR entries.
 
 ## Rails Tasks
 - The following Rails tasks have been created to allow external interaction with the Gaggle engine:
-  - `gaggle:create_thread`: Creates a new thread with a given name. Returns JSON output with `status` and `message`.
-  - `gaggle:send_message`: Sends a message to a specific thread from a given Goose. Requires `thread_id`, `goose_id`, and `content` environment variables. Returns JSON output with `status` and `message`.
-  - `gaggle:get_thread_messages`: Retrieves all messages from a specific thread. Requires `thread_id` environment variable. Returns JSON output with `content` and `user_name` for each message.
+  - `gaggle:create_channel`: Creates a new channel with a given name. Returns JSON output with `status` and `message`.
+  - `gaggle:send_message`: Sends a message to a specific channel from a given Goose. Requires `channel_id`, `goose_id`, and `content` environment variables. Returns JSON output with `status` and `message`.
+  - `gaggle:get_channel_messages`: Retrieves all messages from a specific channel. Requires `channel_id` environment variable. Returns JSON output with `content` and `user_name` for each message.
   - `gaggle:get_goose_notifications`: Retrieves all notifications for a specific Goose. Requires `goose_id` environment variable. Returns JSON output.
-  - `gaggle:get_threads`: Retrieves all threads. Returns JSON output.
+  - `gaggle:get_channels`: Retrieves all channels. Returns JSON output.

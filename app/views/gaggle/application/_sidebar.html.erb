@@ -1,4 +1,4 @@
-<%# locals: (threads:) %>
+<%# locals: (channels:) %>
 
 <div>
   <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
@@ -55,13 +55,13 @@
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" class="-mx-2 space-y-1">
-                  <%= render threads %>
-                  <%= link_to new_thread_path, class: "new-thread group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
+                  <%= render channels %>
+                  <%= link_to new_channel_path, class: "new-channel group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                     <!-- folder-plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 shrink-0 text-indigo-200 group-hover:text-white">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                     </svg>
-                    New Thread
+                    New Channel
                   <% end%>
                 </ul>
               </li>
@@ -113,14 +113,14 @@
       <nav class="flex flex-1 flex-col">
         <ul role="list" class="flex flex-1 flex-col gap-y-7">
           <li>
-            <ul role="list" thread-list-sidebar class="-mx-2 space-y-1">
-              <%= render threads %>
-              <%= link_to new_thread_path, class: "new-thread group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
+            <ul role="list" channel-list-sidebar class="-mx-2 space-y-1">
+              <%= render channels %>
+              <%= link_to new_channel_path, class: "new-channel group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
                 <!-- folder-plus -->
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 shrink-0 text-indigo-200 group-hover:text-white">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                 </svg>
-                New Thread
+                New channel
               <% end%>
             </ul>
           </li>

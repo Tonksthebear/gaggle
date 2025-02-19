@@ -1,8 +1,8 @@
 Gaggle::Engine.routes.draw do
   root to: "overviews#show"
 
-  resources :threads do
-    resources :messages, only: [ :create ], module: :threads
+  resources :channels do
+    resources :messages, only: [ :create ], module: :channels
   end
 
   resources :messages, only: [ :destroy ]

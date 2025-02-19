@@ -1,11 +1,11 @@
 module Gaggle
-  class Threads::MessagesController < Gaggle::ThreadsController
+  class Channels::MessagesController < Gaggle::ChannelsController
     skip_before_action :verify_authenticity_token
 
     def create
-      @message = @thread.messages.new(message_params)
+      @message = @channel.messages.new(message_params)
       if @message.save
-        redirect_to @thread, notice: "Message sent."
+        redirect_to @channel, notice: "Message sent."
       else
         render :new, notice: "Message was not sent."
       end

@@ -11,6 +11,12 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_02_19_032758) do
+  create_table "gaggle_channels", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "gaggle_gooses", force: :cascade do |t|
     t.string "name", null: false
     t.text "prompt"
@@ -25,8 +31,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_032758) do
     t.datetime "updated_at", null: false
     t.string "messageable_type", null: false
     t.integer "messageable_id", null: false
-    t.index ["goose_id"], name: "index_gaggle_messages_on_goose_id"
-    t.index ["messageable_type", "messageable_id"], name: "index_gaggle_messages_on_messageable"
+    t.index [ "goose_id" ], name: "index_gaggle_messages_on_goose_id"
+    t.index [ "messageable_type", "messageable_id" ], name: "index_gaggle_messages_on_messageable"
   end
 
   create_table "gaggle_notifications", force: :cascade do |t|
@@ -37,9 +43,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_032758) do
     t.datetime "updated_at", null: false
     t.string "messageable_type", null: false
     t.integer "messageable_id", null: false
-    t.index ["goose_id"], name: "index_gaggle_notifications_on_goose_id"
-    t.index ["message_id"], name: "index_gaggle_notifications_on_message_id"
-    t.index ["messageable_type", "messageable_id"], name: "idx_on_messageable_type_messageable_id_e697f3e48f"
+    t.index [ "goose_id" ], name: "index_gaggle_notifications_on_goose_id"
+    t.index [ "message_id" ], name: "index_gaggle_notifications_on_message_id"
+    t.index [ "messageable_type", "messageable_id" ], name: "idx_on_messageable_type_messageable_id_e697f3e48f"
   end
 
   create_table "gaggle_sessions", force: :cascade do |t|
@@ -47,13 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_032758) do
     t.string "log_file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["goose_id"], name: "index_gaggle_sessions_on_goose_id"
-  end
-
-  create_table "gaggle_threads", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index [ "goose_id" ], name: "index_gaggle_sessions_on_goose_id"
   end
 
   add_foreign_key "gaggle_messages", "gaggle_gooses", column: "goose_id"

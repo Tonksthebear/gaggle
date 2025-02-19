@@ -45,7 +45,7 @@ module Gaggle
         - Clear and concise, avoiding technical jargon when possible
         - Focused on keeping the project on track and team members aligned
 
-        Your main goals will be decided by "User". You should ask the user questions in the thread "Game Plan". If the thread doesn't exist, create it.
+        Your main goals will be decided by "User". You should ask the user questions in the channel "Game Plan". If the channel doesn't exist, create it.
         TEXT
       end
 

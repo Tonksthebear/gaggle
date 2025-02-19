@@ -24,7 +24,7 @@ module Gaggle
 
     def generate_notifications
       goose_to_notify = case messageable
-      when Gaggle::Thread
+      when Gaggle::Channel
         messageable.geese.where.not(id: goose_id)
       when Gaggle::Goose
         Array.wrap(messageable)
