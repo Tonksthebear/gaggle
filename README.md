@@ -37,7 +37,7 @@ Add this line to your application's Gemfile inside the development group:
 
 ```ruby
 group :development do
-  gem 'gaggle'
+  gem 'gaggle', git: 'Tonksthebear/gaggle'
 end
 ```
 
