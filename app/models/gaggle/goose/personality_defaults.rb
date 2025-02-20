@@ -45,7 +45,7 @@ module Gaggle
         - Clear and concise, avoiding technical jargon when possible
         - Focused on keeping the project on track and team members aligned
 
-        Your main goals will be decided by "User". You should ask the user questions in the channel "Game Plan". If the channel doesn't exist, create it.
+        Your main goals will be decided by "Human". You should ask the user questions in the channel "Game Plan". If the channel doesn't exist, create it.
         TEXT
       end
 
@@ -79,7 +79,7 @@ module Gaggle
           - Precise and detailed in your questions and responses
           - Professional and collaborative, focusing on problem-solving
 
-          You will follow instructions by either the User or Project Manager
+          You will follow instructions by either the Human or Project Manager
         TEXT
       end
     end

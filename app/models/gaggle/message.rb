@@ -18,7 +18,7 @@ module Gaggle
     scope :later_than, ->(time = 0) { where(created_at: time..) }
 
     def user_name
-      goose&.name || "User"
+      goose&.name || "Human"
     end
 
     private

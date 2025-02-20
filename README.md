@@ -8,10 +8,10 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
 - Assign names and prompts to Goose instances
   - View and interact with goose instances through the running terminal directly through the web interface
   - Message and collaborate with your gaggle through message threads
-- Both Goose and User can
+- Both Goose and Human can
   - Create and manage channels
   - Send messages to channels
-- Users can
+- Human can
   - Decide who is in a channel
 - Goose can
   - Check their unread notifications
