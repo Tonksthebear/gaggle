@@ -42,7 +42,6 @@ module Gaggle
           input_thread = Thread.new(input_queue, logger, stdin) do |input_queue, logger, stdin|
             loop do
               command = input_queue.pop
-              break if command == :exit
               stdin.write command + "\n"
               stdin.flush
               logger.info "Sent command: #{command}"
