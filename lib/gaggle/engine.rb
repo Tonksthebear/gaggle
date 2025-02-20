@@ -1,5 +1,6 @@
 module Gaggle
   class Engine < ::Rails::Engine
+    require "classy/yaml"
     isolate_namespace Gaggle
 
     config.to_prepare do
