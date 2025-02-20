@@ -43,7 +43,8 @@ module Gaggle
             loop do
               command = input_queue.pop
               break if command == :exit
-              stdin.syswrite command
+              stdin.write command + "\n"
+              stdin.flush
               logger.info "Sent command: #{command}"
             end
           end
