@@ -2,8 +2,9 @@ Gaggle::Engine.routes.draw do
   root to: "overviews#show"
 
   resources :channels do
-    resources :messages, only: [ :create ], module: :channels
-    resources :gooses, only: [ :index, :create, :destroy ]
+    scope module: :channels do
+      resources :messages, only: [ :create ]
+    end
   end
 
   resources :messages, only: [ :destroy ]

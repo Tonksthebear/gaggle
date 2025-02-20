@@ -4,7 +4,7 @@ module Gaggle
     self.table_name = "gaggle_gooses"
     include Goose::PersonalityDefaults
 
-    has_many :sessions, class_name: "Gaggle::Session"
+    has_many :sessions
     has_many :messages
     has_many :private_messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
     has_many :sessions

@@ -23,6 +23,7 @@ Follow template in /docs/adr/template.md
 - StimulusJS, TailwindCSS, and Turbo.js are all used on the front end
 - Tailwind CSS is used for styling the welcome page in `Overviews#show`.
 - Turbo streams are used for live updating of web pages
+- Tailwind CSS is used for styling the form in `app/views/gaggle/channels/gooses/index.html.erb`.
 
 ## Session Management
 

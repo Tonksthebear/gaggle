@@ -32,6 +32,7 @@
    - `gaggle:create_channel` (returns JSON output)
    - `gaggle:send_message` (requires environment variables, returns JSON output)
    - `gaggle:get_channel_messages` (requires environment variable, returns JSON output)
+   - Added a form to `app/views/gaggle/channels/gooses/index.html.erb` for adding geese to a channel, using the same layout as the "new goose" form.
    - `gaggle:get_goose_notifications` (requires environment variable, returns JSON output)
    - `gaggle:get_channels` (returns JSON output)
 - Updated the `app/views/gaggle/overviews/show.html.erb` file to include a welcome page with instructions to create a Goose using the left sidebar. The welcome page is styled with Tailwind CSS.

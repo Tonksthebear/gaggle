@@ -18,10 +18,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_004428) do
   end
 
   create_table "gaggle_channels_gooses", id: false, force: :cascade do |t|
-    t.integer "gaggle_channel_id", null: false
-    t.integer "gaggle_goose_id", null: false
-    t.index ["gaggle_channel_id", "gaggle_goose_id"], name: "idx_on_gaggle_channel_id_gaggle_goose_id_5cb043e96e"
-    t.index ["gaggle_goose_id", "gaggle_channel_id"], name: "idx_on_gaggle_goose_id_gaggle_channel_id_040c17dfaa"
+    t.integer "channel_id", null: false
+    t.integer "goose_id", null: false
+    t.index ["channel_id", "goose_id"], name: "index_gaggle_channels_gooses_on_channel_id_and_goose_id"
+    t.index ["goose_id", "channel_id"], name: "index_gaggle_channels_gooses_on_goose_id_and_channel_id"
   end
 
   create_table "gaggle_gooses", force: :cascade do |t|

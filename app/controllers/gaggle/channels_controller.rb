@@ -39,11 +39,11 @@ module Gaggle
     private
 
     def set_channel
-      @channel = Gaggle::Channel.includes(messages: :goose).find_by(id: params[:id] || params[:channel_id]) || Gaggle::Channel.new
+      @channel = Gaggle::Channel.includes(messages: :goose).find_by(id: params[:channel_id] || params[:id]) || Gaggle::Channel.new
     end
 
     def channel_params
-      params.require(:channel).permit(:name)
+      params.require(:channel).permit(:name, goose_ids: [])
     end
   end
 end

@@ -13,7 +13,7 @@ module Gaggle
 
     after_create_commit :generate_notifications
     after_create_commit :broadcast_create
-    after_create_commit :associate_goose, if: -> { messageable_type == 'Gaggle::Channel' }
+    after_create_commit :associate_goose, if: -> { goose_id.present? && messageable_type == 'Gaggle::Channel' }
 
     scope :later_than, ->(time = 0) { where(created_at: time..) }
 
@@ -26,7 +26,7 @@ module Gaggle
     def generate_notifications
       goose_to_notify = case messageable
       when Gaggle::Channel
-        messageable.geese.where.not(id: goose_id)
+        messageable.gooses.where.not(id: goose_id)
       when Gaggle::Goose
         Array.wrap(messageable)
       end

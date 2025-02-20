@@ -17,6 +17,16 @@
       <%= form.text_field :name, required: true, class: "mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
     </div>
 
+    <div class="mb-4">
+      <h3 class="block text-gray-700 text-lg font-bold mb-2">Assign Gaggle Members</h3>
+      <%= form.collection_check_boxes :goose_ids, Gaggle::Goose.all, :id, :name do |b| %>
+        <div class="flex items-center mb-2">
+          <%= b.label class: "mr-2 block text-lg text-gray-900" %>
+          <%= b.check_box class: "ml-2 h-6 w-6 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" %>
+        </div>
+      <% end %>
+    </div>
+
     <div>
       <%= form.submit class: "bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700" %>
     </div>

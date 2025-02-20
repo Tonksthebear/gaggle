@@ -76,8 +76,9 @@ This document summarizes the current model design and business logic for the Gag
 ## Next Steps
 - Implement models and migrations for the above structure.
 - Develop the callback/service for notification generation within `Gaggle::Message`.
-- Update the code so that we have the ability to send messages in channels and send notifications based on those messages and who is in the channels.
-- Update the changelog and create any necessary ADR entries.
+  - Update the code so that we have the ability to send messages in channels and send notifications based on those messages and who is in the channels.
+  - Added a form in `app/views/gaggle/channels/gooses/index.html.erb` for adding geese to a channel, using the same layout as the "new goose" form.
+  - Update the changelog and create any necessary ADR entries.
 
 ## Rails Tasks
 - The following Rails tasks have been created to allow external interaction with the Gaggle engine:

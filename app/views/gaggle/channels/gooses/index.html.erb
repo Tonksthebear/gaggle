@@ -1,0 +1,12 @@
+<div class="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
+  <%= form_with url: channel_gooses_path(@channel), scope: :goose, method: :post, class: "space-y-4" do |form| %>
+    <div class="mb-4">
+      <%= form.label :id, "Select Goose", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.select :id, options_from_collection_for_select(@missing_gooses, :id, :name), { prompt: "Choose a Goose" }, { class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" } %>
+    </div>
+
+    <div>
+      <%= form.submit "Add Goose", class: yass(btn: :blue) %>
+    </div>
+  <% end %>
+</div>
