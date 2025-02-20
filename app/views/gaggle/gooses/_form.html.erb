@@ -4,6 +4,12 @@
       <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
       <%= f.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
     </div>
+    <%= select_tag :preset_prompts,
+                   options_for_select(Gaggle::Goose.personalities.map { |personality| [personality[:name], personality[:prompt]] }),
+                   prompt: 'Choose a preset prompt',
+                   class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
+                   onchange: "document.getElementById('#{f.field_id(:prompt)}').value = this.options[this.selectedIndex].value"
+                    %>
     <div>
       <%= f.label :prompt, class: "block text-sm font-medium text-gray-700" %>
       <%= f.text_area :prompt, rows: 4, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>

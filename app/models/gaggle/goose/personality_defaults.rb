@@ -4,16 +4,16 @@ module Gaggle
 
     class_methods do
       def personalities
-        {
-          project_manager: {
+        [
+          {
             name: "Project Manager",
             prompt: project_manager_prompt
           },
-          engineer: {
+          {
             name: "Engineer",
             prompt: engineer_prompt
           }
-        }
+        ]
       end
 
       def project_manager_prompt
