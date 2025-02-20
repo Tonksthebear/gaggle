@@ -13,7 +13,7 @@ module Gaggle
 
     after_create_commit :generate_notifications
     after_create_commit :broadcast_create
-    after_create_commit :associate_goose, if: -> { goose_id.present? && messageable_type == 'Gaggle::Channel' }
+    after_create_commit :associate_goose, if: -> { goose_id.present? && messageable_type == "Gaggle::Channel" }
 
     scope :later_than, ->(time = 0) { where(created_at: time..) }
 
