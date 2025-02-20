@@ -1,2 +1,2 @@
 web: bin/rails server
-css: bin/rails tailwindcss:watch
+css: cd ../.. && echo $PWD && bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/stylesheets/gaggle/tailwind.css -w

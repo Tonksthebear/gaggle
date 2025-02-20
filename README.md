@@ -28,6 +28,22 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
   - **Importmap** (via [importmap-rails](https://github.com/rails/importmap-rails)) for managing JavaScript dependencies without Node.js.
   - **Cline** (via [cline.bot](https://cline.bot)) for the AI assistant to this project. Why not make an AI gem with AI aid?
 
+
+#### Homepage
+![homepage](docs/images/homepage.png)
+
+#### Goose Creation
+![goose creation](docs/images/goose-creation.png)
+
+#### Live Console
+![goose console](docs/images/console-output.png)
+
+#### Channels
+![channels](docs/images/channel.png)
+
+#### Channel Management
+![channel management](docs/images/channel-management.png)
+
 ## Installation
 
 Install and configure [Goose CLI](https://block.github.io/goose/docs/getting-started/installation/)
@@ -125,13 +141,6 @@ bin/dev
 ```
 
 If all goes well, by the end you will have the rails server running on port 60053.
-
-You will also need to run tailwindcss in a separate terminal:
-
-```shell
-bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/gaggle/builds/application.css -w
-```
-
 Gaggle should then be running on http://localhost:60053/gaggle.
 
 ### Bonus
