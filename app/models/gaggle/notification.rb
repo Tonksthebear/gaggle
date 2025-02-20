@@ -11,6 +11,7 @@ module Gaggle
     after_create_commit :notify_goose, if: -> { goose.present? }
 
     def notify_goose
+      update(delivered_at: Time.current)
       goose.notify_of_message(notification: self)
     end
 

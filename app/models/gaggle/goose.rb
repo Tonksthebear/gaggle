@@ -10,6 +10,7 @@ module Gaggle
     has_many :sessions
     has_many :notifications
     has_many :recipient_notifications, class_name: "Gaggle::Notification", as: :messageable
+    has_and_belongs_to_many :channels
 
     validates :name, presence: true, uniqueness: true
 

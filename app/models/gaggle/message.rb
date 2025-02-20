@@ -13,6 +13,7 @@ module Gaggle
 
     after_create_commit :generate_notifications
     after_create_commit :broadcast_create
+    after_create_commit :associate_goose, if: -> { messageable_type == 'Gaggle::Channel' }
 
     scope :later_than, ->(time = 0) { where(created_at: time..) }
 
@@ -40,12 +41,17 @@ module Gaggle
 
       # Create notifications for each unique goose.
       goose_to_notify.each do |goose|
-        Gaggle::Notification.create(message: self, goose:, messageable:)
+        notification = Gaggle::Notification.create(message: self, goose:, messageable:)
+        notification.save || notification.notify_goose
       end
     end
 
     def broadcast_create
       broadcast_prepend_to messageable, target: "messages"
+    end
+
+    def associate_goose
+      goose.channels << self.messageable
     end
   end
 end

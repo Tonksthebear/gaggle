@@ -3,7 +3,7 @@ module Gaggle
     self.table_name = "gaggle_channels"
 
     has_many :messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
-    has_many :geese, -> { distinct }, class_name: "Gaggle::Goose", through: :messages, source: :goose
+    has_and_belongs_to_many :geese
     has_many :notifications, class_name: "Gaggle::Notification", dependent: :destroy, as: :messageable
 
     validates :name, presence: true

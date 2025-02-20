@@ -3,6 +3,7 @@ Gaggle::Engine.routes.draw do
 
   resources :channels do
     resources :messages, only: [ :create ], module: :channels
+    resources :gooses, only: [ :index, :create, :destroy ]
   end
 
   resources :messages, only: [ :destroy ]

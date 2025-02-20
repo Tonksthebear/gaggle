@@ -9,6 +9,9 @@
       </svg>
     <% end %>
   <% end %>
+  <%= link_to [@channel, :gooses], class: yass(btn: :gray) do %>
+    <%= render 'logo', classes: 'h-6 w-auto' %>
+  <% end %>
 
   <%= button_to @channel, method: :delete, class: yass(btn: :danger), data: { turbo_confirm: "Are you sure you want to delete this channel?" } do %>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -31,3 +34,5 @@
     </div>
   <% end %>
 </div>
+
+<% console %>
