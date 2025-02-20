@@ -72,7 +72,7 @@ development:
 Gaggle uses it's own database schema, so you will need to run the migrations:
 
 ```shell
-bin/rails gaggle:install:migrations
+bin/rails db:migrate:gaggle
 ```
 
 ### Warning
