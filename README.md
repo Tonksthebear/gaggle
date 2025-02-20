@@ -123,6 +123,8 @@ bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/
 
 Gaggle should then be running on http://localhost:3000/gaggle.
 
+### Bonus
+Since this was built with Cline, your cline should be able to use the [memory bank](https://docs.cline.bot/improving-your-prompting-skills/custom-instructions-library/cline-memory-bank) as well. Configure the prompt as instructed and have fun
 
 ## License
 
