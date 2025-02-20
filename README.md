@@ -109,13 +109,22 @@ To run the project locally, you will need to have the following dependencies ins
 - Ruby on Rails (and associated dependencies)
 - Goose CLI (make sure it's working)
 
-Once you have the dependencies installed, you can run the project locally by running the following command:
+Once you have the dependencies installed, you can run the project locally by running the following commands:
 
 ```shell
-cd test/dummy && bin/dev
+cd test/dummy
+```
+```shell
+bundle
+```
+```shell
+bin/rails db:migrate:gaggle
+```
+```shell
+bin/dev
 ```
 
-This will start the rails server on port 60053.
+If all goes well, by the end you will have the rails server running on port 60053.
 
 You will also need to run tailwindcss in a separate terminal:
 
