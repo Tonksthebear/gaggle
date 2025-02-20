@@ -21,7 +21,7 @@ Follow template in /docs/adr/template.md
 - Shallow nesting of resources (index, new, create routes are nested in the parent, others are unnested and belong to the resource itself)
 - Prefer composition over inheritance
 - StimulusJS, TailwindCSS, and Turbo.js are all used on the front end
-- Tailwind CSS is used for styling the welcome page in `Overviews#show`.
+- Tailwind CSS is used for styling the welcome page in `Overviews#show`. The project doesn't need to have tailwind because the styles come with the gem. If you want to contribute, you have to have the tailwind gem and have it running with the options `-i app/assets/stylesheets/application.css -o app/assets/gaggle/builds/application.css`
 - Turbo streams are used for live updating of web pages
 - Tailwind CSS is used for styling the form in `app/views/gaggle/channels/gooses/index.html.erb`.
 

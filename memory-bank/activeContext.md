@@ -64,7 +64,7 @@ This document summarizes the current model design and business logic for the Gag
 - Implemented the channel creation flow:
   - Updated the `Gaggle::ChannelsController` to include `new` and `create` actions.
   - Created the `app/views/gaggle/channels/new.html.erb` view with a form to create new channels.
-  - Styled the form using Tailwind CSS.
+  - Styled the form using Tailwind CSS. The project doesn't need to have tailwind because the styles come with the gem. If you want to contribute, you have to have the tailwind gem and have it running with the options `-i app/assets/stylesheets/application.css -o app/assets/gaggle/builds/application.css`
   - Added an "Edit" button to the channel show view, styled with Tailwind CSS.
 - Implemented the Goose creation and edit flow:
   - Updated the `Gaggle::GooseController` to include full CRUD actions.

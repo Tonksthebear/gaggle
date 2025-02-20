@@ -9,11 +9,11 @@ Gem::Specification.new do |spec|
   spec.description = "A gem that encapsulates the facilitation and use of multiple instances of the Goose instances when in development."
   spec.license     = "MIT"
   spec.add_dependency "turbo-rails"
-  spec.add_dependency "stimulus-rails"
-  spec.add_dependency "tailwindcss-rails"
-  spec.add_dependency "importmap-rails"
   spec.add_dependency "classy-yaml"
   spec.add_dependency "strings-ansi"
+  spec.add_development_dependency "tailwindcss-rails"
+  spec.add_development_dependency "importmap-rails"
+  spec.add_development_dependency "stimulus-rails"
 
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 8.0.0.beta1"
+  spec.add_dependency "rails", ">= 7"
 end

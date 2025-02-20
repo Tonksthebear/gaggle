@@ -3,11 +3,8 @@ PATH
   specs:
     gaggle (0.1.0)
       classy-yaml
-      importmap-rails
-      rails (>= 8.0.0.beta1)
-      stimulus-rails
+      rails (>= 7)
       strings-ansi
-      tailwindcss-rails
       turbo-rails
 
 GEM
