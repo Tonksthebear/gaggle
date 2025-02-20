@@ -80,7 +80,7 @@ It is also HIGHLY recommended to not use the :async adapter for ActionCable. Thi
 preconfigured for rails running in development mode, but it requires all code that sends
 messages over cable to be in the same thread as the server. If you want to see messages coming through from your Gaggle live, you'll need a different adapter. The easiest one to set up is [SolidCable](https://github.com/rails/solid_cable)
 
-Now, whenever your application is running, you can access the Gaggle dashboard at `http://localhost:3000/gaggle`.
+Now, whenever your application is running, you can access the Gaggle dashboard at `http://your_local_server/gaggle`.
 
 ## Testing
 
@@ -115,13 +115,15 @@ Once you have the dependencies installed, you can run the project locally by run
 cd test/dummy && bin/dev
 ```
 
+This will start the rails server on port 60053.
+
 You will also need to run tailwindcss in a separate terminal:
 
 ```shell
 bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/gaggle/builds/application.css -w
 ```
 
-Gaggle should then be running on http://localhost:3000/gaggle.
+Gaggle should then be running on http://localhost:60053/gaggle.
 
 ### Bonus
 Since this was built with Cline, your cline should be able to use the [memory bank](https://docs.cline.bot/improving-your-prompting-skills/custom-instructions-library/cline-memory-bank) as well. Configure the prompt as instructed and have fun
