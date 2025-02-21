@@ -18,21 +18,31 @@ module Gaggle
       self.save
       Rails.logger.info "Starting executable for: #{goose.name}"
 
+
       @@running_executables[to_global_id] = Thread.new(logger) do |logger|
         Thread.current[:input_queue] = input_queue = Queue.new
         Thread.current[:logger] = logger
 
+        mutex = Mutex.new
+        condition = ConditionVariable.new
+        output_received = false
+
         # PTY.spawn("GOOSE_ID=#{goose_id} goose session") do |stdout, stdin, pid|
         Open3.popen3({ "GOOSE_ID" => goose.id.to_s }, "goose session") do |stdin, stdout, stderr, wait_thr|
           @pid = wait_thr.pid
-          logger.info "Session started"
           save!
 
           output_thread = Thread.new(stdout, logger) do |stdout|
             begin
               stdout.each_line do |line|
-                logger.info line
-                broadcast_append target: dom_id(self, :code), content: Strings::ANSI.sanitize(line)
+                mutex.synchronize do
+                  logger.info line
+                  broadcast_append target: dom_id(self, :code), content: Strings::ANSI.sanitize(line)
+                  unless output_received
+                    output_received = true
+                    condition.signal  # Signal that we've received first output
+                  end
+                end
               end
             rescue IOError => e
               logger.error "Output stream closed: #{e.message}"
@@ -40,6 +50,10 @@ module Gaggle
           end
 
           input_thread = Thread.new(input_queue, logger, stdin) do |input_queue, logger, stdin|
+            mutex.synchronize do
+              condition.wait(mutex) unless output_received
+            end
+
             loop do
               command = input_queue.pop
               stdin.write command + "\n"

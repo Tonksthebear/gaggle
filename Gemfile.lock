@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gaggle (0.1.4)
+    gaggle (0.1.5)
       classy-yaml
       rails (>= 7)
       strings-ansi
