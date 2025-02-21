@@ -13,8 +13,8 @@
 ActiveRecord::Schema[8.0].define(version: 2025_02_20_004428) do
   create_table "gaggle_channels", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "gaggle_channels_gooses", id: false, force: :cascade do |t|
@@ -27,15 +27,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_004428) do
   create_table "gaggle_gooses", force: :cascade do |t|
     t.string "name", null: false
     t.text "prompt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "gaggle_messages", force: :cascade do |t|
     t.text "content", null: false
     t.integer "goose_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "messageable_type", null: false
     t.integer "messageable_id", null: false
     t.index [ "goose_id" ], name: "index_gaggle_messages_on_goose_id"
@@ -46,8 +46,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_004428) do
     t.integer "message_id"
     t.integer "goose_id"
     t.datetime "read_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "messageable_type", null: false
     t.integer "messageable_id", null: false
     t.datetime "delivered_at"
@@ -59,8 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_004428) do
   create_table "gaggle_sessions", force: :cascade do |t|
     t.integer "goose_id", null: false
     t.string "log_file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index [ "goose_id" ], name: "index_gaggle_sessions_on_goose_id"
   end
 

@@ -10,7 +10,7 @@ development:
   gaggle:
     <<: *default
     database: storage/gaggle.sqlite3
-    migrations_paths: db/gaggle_migrate
+    migrations_paths: <%= Gaggle::Engine.root.join("db/gaggle_migrate") %>
   cable:
     <<: *default
     database: storage/cable.sqlite3
@@ -22,7 +22,7 @@ test:
   gaggle:
     <<: *default
     database: storage/test_gaggle.sqlite3
-    migrations_paths: db/gaggle_migrate
+    migrations_paths: <%= Gaggle::Engine.root.join("db/gaggle_migrate") %>
   cable:
     <<: *default
     database: storage/test_cable.sqlite3

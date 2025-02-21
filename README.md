@@ -82,7 +82,7 @@ development:
   gaggle:
     <<: *default
     database: storage/gaggle.sqlite3
-    migrations_paths:: Gaggle::Engine.root.join("db/migrate_gaggle")
+    migrations_paths:: <%= Gaggle::Engine.root.join("db/gaggle_migrate") %>
 ```
 
 Gaggle uses it's own database schema, so you will need to run the migrations:

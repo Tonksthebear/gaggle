@@ -33,10 +33,6 @@ module Gaggle
       app.config.assets.paths << Engine.root.join("app/javascript")
     end
 
-    initializer "gaggle.migrations" do |app|
-      app.config.paths["db/migrate"] << Gaggle::Engine.root.join("db/migrate_gaggle")
-    end
-
     initializer "gaggle.autoloader" do |app|
       Rails.autoloaders.main.ignore(Gaggle::Engine.root.join("app/models/gaggle/session.rb"))
 
