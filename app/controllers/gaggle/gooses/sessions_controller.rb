@@ -9,7 +9,7 @@ module Gaggle
     def create
       session = @goose.sessions.create!
       session.start_executable
-      sleep 1.seconds
+      sleep 1.second
       session.write_to_executable(@goose.interaction_prompt + @goose.prompt + @goose.begin_prompt)
       redirect_to session
     end
