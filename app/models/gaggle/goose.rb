@@ -50,7 +50,7 @@ module Gaggle
     def notify_of_message(notification:)
       Rails.logger.info "Notifying goose of message: #{notification.message_id}"
       if session = sessions.running.first
-        session.write_to_executable("Automated Reply: You have a new message in #{notification.messageable_type}: #{notification.messageable_id}")
+        session.write_to_executable("Automated: You have a new message in #{notification.messageable_type}: #{notification.messageable_id}. Please respond")
         true
       else
         Rails.logger.error "No running sessions found for goose: #{id}"
