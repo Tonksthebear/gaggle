@@ -63,7 +63,7 @@ jobs:
       - name: Set up test database
         run: bundle exec rails db:prepare
         env:
-          DATABASE_URL: sqlite3::memory:
+          DATABASE_URL: sqlite3::memory
 
       # Run the Minitest suite
       - name: Run tests
