@@ -55,7 +55,7 @@ jobs:
       - name: Set up test database
         run: bundle exec rails db:prepare
         env:
-          DATABASE_URL: sqlite3::memory:
+          DATABASE_URL: sqlite3::memory
 
       - name: Run tests
         run: bundle exec rails test
