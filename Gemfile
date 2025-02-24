@@ -32,7 +32,13 @@ gem "classy-yaml", "~> 1.3"
 
 gem "erb-formatter", "~> 0.7.3"
 
-gem "web-console", "~> 4.2"
+group :development do
+  gem "web-console", "~> 4.2"
+end
+
+group :test do
+  gem "mocha"
+end
 
 gem "jbuilder", "~> 2.13"
 

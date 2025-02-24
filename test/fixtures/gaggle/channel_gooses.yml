@@ -1,0 +1,7 @@
+channel_goose_one:
+  channel: channel_one
+  goose: goose_one
+
+channel_goose_two:
+  channel: channel_two
+  goose: goose_two

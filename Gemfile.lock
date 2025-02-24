@@ -130,6 +130,8 @@ GEM
     marcel (1.0.4)
     mini_mime (1.1.5)
     minitest (5.25.4)
+    mocha (2.7.1)
+      ruby2_keywords (>= 0.0.5)
     net-imap (0.4.16)
       date
       net-protocol
@@ -240,6 +242,7 @@ GEM
       rubocop-performance
       rubocop-rails
     ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     securerandom (0.4.1)
     solid_cable (3.0.7)
       actioncable (>= 7.2)
@@ -292,6 +295,7 @@ DEPENDENCIES
   gaggle!
   importmap-rails (~> 2.0)
   jbuilder (~> 2.13)
+  mocha
   propshaft
   puma
   rubocop-rails-omakase
