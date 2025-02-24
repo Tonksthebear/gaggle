@@ -243,7 +243,7 @@ GEM
       rubocop-rails
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    securerandom (0.4.1)
+    securerandom (0.3.2)
     solid_cable (3.0.7)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -299,6 +299,7 @@ DEPENDENCIES
   propshaft
   puma
   rubocop-rails-omakase
+  securerandom (< 0.4.0)
   solid_cable (~> 3.0)
   sqlite3
   stimulus-rails (~> 1.3)

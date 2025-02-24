@@ -4,6 +4,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "puma"
+gem "securerandom", "< 0.4.0" # For ruby 2.7+ compatibility
 
 gem "sqlite3"
 
@@ -14,8 +15,6 @@ gem "rubocop-rails-omakase", require: false
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
-
-
 
 
 gem "importmap-rails", "~> 2.0"

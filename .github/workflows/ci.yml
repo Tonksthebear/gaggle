@@ -11,20 +11,17 @@ jobs:
     name: Run Minitest Suite
     runs-on: ubuntu-latest
 
-    # Matrix strategy for Ruby and Rails versions
     strategy:
       matrix:
         ruby: ["2.7", "3.0", "3.2"]
         rails: ["7.1", "8.0.0.beta1"]
         exclude:
-          # Exclude Rails 7 with Ruby 3.2 (not officially supported)
           - ruby: "3.2"
-            rails: "7.1"
-          # Exclude Rails 8 with Ruby < 3.2 (requires 3.1+ per beta notes)
+            rails: "7.1" # Rails 7.1 max Ruby 3.1
           - ruby: "2.7"
-            rails: "8.0.0.beta1"
+            rails: "8.0.0.beta1" # Rails 8 min Ruby 3.1
           - ruby: "3.0"
-            rails: "8.0.0.beta1"
+            rails: "8.0.0.beta1" # Rails 8 min Ruby 3.1
 
     env:
       RAILS_ENV: test
@@ -35,41 +32,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Ruby with the matrix version
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      # Install system dependencies
       - name: Install SQLite
         run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
 
-      # Modify Gemfile for specific Rails version
       - name: Set Rails version in Gemfile
         run: |
           sed -i "s/gem 'rails', .*/gem 'rails', '${{ matrix.rails }}'/" Gemfile
-          cat Gemfile # Debug: Show the updated Gemfile
+          cat Gemfile # Debug output
         env:
           RAILS_VERSION: ${{ matrix.rails }}
 
-      # Install gems with the modified Gemfile
       - name: Bundle install
         run: |
           bundle install --jobs 4 --retry 3
 
-      # Set up test database (in-memory SQLite)
       - name: Set up test database
         run: bundle exec rails db:prepare
         env:
-          DATABASE_URL: sqlite3::memory
+          DATABASE_URL: sqlite3::memory:
 
-      # Run the Minitest suite
       - name: Run tests
         run: bundle exec rails test
 
-      # Upload test logs if tests fail
       - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v4

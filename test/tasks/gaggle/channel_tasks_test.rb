@@ -200,9 +200,9 @@ class GaggleTasksTest < ActiveSupport::TestCase
     ENV["channel_id"] = channel.id.to_s
     ENV["GOOSE_ID"] = goose.id.to_s
     expected = [ {
-      content: "Hello from goose_one in channel_one",
-      user_name: "goose_one",
-      user_id: goose.id
+      content: message.content,
+      user_name: message.user_name,
+      user_id: message.goose_id
     } ]
     task = Rake::Task["gaggle:get_channel_messages"]
     task.reenable
