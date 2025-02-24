@@ -3,7 +3,7 @@ PATH
   specs:
     gaggle (0.1.7)
       classy-yaml
-      rails (>= 7)
+      rails (>= 7.1)
       strings-ansi
       turbo-rails
 

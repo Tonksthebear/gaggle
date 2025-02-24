@@ -1,6 +1,5 @@
 name: CI
 
-# Trigger the workflow on push or pull request to main/master branches
 on:
   push:
     branches:
@@ -11,44 +10,62 @@ on:
       - main
       - master
 
-# Define jobs to run
 jobs:
   test:
     name: Run Minitest Suite
     runs-on: ubuntu-latest
 
-    # Set up services (e.g., SQLite for in-memory DB)
-    services:
-      sqlite:
-        image: sqlite:latest
-        ports:
-          - 5432:5432
+    # Matrix strategy for Ruby and Rails versions
+    strategy:
+      matrix:
+        ruby: ["2.7", "3.0", "3.2"]
+        rails: ["7.1", "8.0.0.beta1"]
+        exclude:
+          # Exclude Rails 7 with Ruby 3.2 (not officially supported)
+          - ruby: "3.2"
+            rails: "7.1"
+          # Exclude Rails 8 with Ruby < 3.2 (requires 3.1+ per beta notes)
+          - ruby: "2.7"
+            rails: "8.0.0.beta1"
+          - ruby: "3.0"
+            rails: "8.0.0.beta1"
 
-    # Environment variables for the test run
     env:
       RAILS_ENV: test
       BUNDLE_PATH: vendor/bundle
+      BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile
 
     steps:
-      # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Ruby (match your gem's Ruby version, e.g., 3.2.2 from your logs)
+      # Set up Ruby with the matrix version
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2 # Adjust to your project's Ruby version
-          bundler-cache: true # Cache gems for faster runs
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
 
-      # Install SQLite dependencies (if needed)
+      # Install system dependencies
       - name: Install SQLite
         run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
 
-      # Set up the test database (for an in-memory SQLite DB)
-      - name: Set up test database
+      # Modify Gemfile for specific Rails version
+      - name: Set Rails version in Gemfile
         run: |
-          bundle exec rails db:prepare
+          sed -i "s/gem 'rails', .*/gem 'rails', '${{ matrix.rails }}'/" Gemfile
+          cat Gemfile # Debug: Show the updated Gemfile
+        env:
+          RAILS_VERSION: ${{ matrix.rails }}
+
+      # Install gems with the modified Gemfile
+      - name: Bundle install
+        run: |
+          bundle install --jobs 4 --retry 3
+
+      # Set up test database (in-memory SQLite)
+      - name: Set up test database
+        run: bundle exec rails db:prepare
         env:
           DATABASE_URL: sqlite3::memory:
 
@@ -56,10 +73,10 @@ jobs:
       - name: Run tests
         run: bundle exec rails test
 
-      # Optional: Upload test artifacts (e.g., logs) if tests fail
+      # Upload test logs if tests fail
       - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-logs
+          name: test-logs-${{ matrix.ruby }}-${{ matrix.rails }}
           path: log/test.log
