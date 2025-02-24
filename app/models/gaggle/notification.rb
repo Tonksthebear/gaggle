@@ -40,7 +40,7 @@ module Gaggle
       end
 
       def for_messageable(messageable)
-        where(messageable_id: messageable.id, messageable_type: messageable.class)
+        where(messageable_id: messageable.id, messageable_type: messageable.class.name)
       end
     end
   end

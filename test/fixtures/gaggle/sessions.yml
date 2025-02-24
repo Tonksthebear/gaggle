@@ -1,0 +1,7 @@
+session_one:
+  goose: goose_one
+  log_file: log/gaggle/goose_1/session_one.log
+
+session_two:
+  goose: goose_two
+  log_file: log/gaggle/goose_2/session_two.log

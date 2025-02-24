@@ -1,0 +1,11 @@
+notification_one:
+  message: message_one
+  messageable: channel_one
+  messageable_type: Gaggle::Channel
+  goose: goose_one
+
+notification_two:
+  message: message_two
+  messageable: channel_two
+  messageable_type: Gaggle::Channel
+  goose: goose_two

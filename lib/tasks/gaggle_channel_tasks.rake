@@ -4,14 +4,18 @@ namespace :gaggle do
   To use: bin/rails gaggle:get_channels
   DESC
   task get_channels: :environment do
-    channels = Gaggle::Channel.all.map do |channel|
-      { id: channel.id, name: channel.name }
+    begin
+      channels = Gaggle::Channel.all.order(:id).map do |channel|
+        { id: channel.id, name: channel.name }
+      end
+      puts JSON.generate(channels)
+    rescue => e
+      puts "Error: Failed to retrieve channels - #{e.message}"
     end
-    puts JSON.generate(channels)
   end
 
   desc <<-DESC
-  Creates a new channel with a given name.
+  Creates a new channel with a given name
   To use: bin/rails gaggle:create_channel name="{name}"
           Replace {name} with the name of the channel
   DESC
@@ -20,12 +24,16 @@ namespace :gaggle do
     if name.blank?
       puts "Error: Channel name is required."
     else
-      channel = Gaggle::Channel.create(name: name)
-      message = {
-        status: "success",
-        message: "Created channel with ID: #{channel.id} and name: #{channel.name}"
-      }
-      puts JSON.generate(message)
+      begin
+        channel = Gaggle::Channel.create!(name: name)
+        message = {
+          status: "success",
+          message: "Created channel with ID: #{channel.id} and name: #{channel.name}"
+        }
+        puts JSON.generate(message)
+      rescue ActiveRecord::RecordInvalid => e
+        puts "Error: Channel creation failed - #{e.message}"
+      end
     end
   end
 
@@ -40,14 +48,22 @@ namespace :gaggle do
 
     if channel_id.blank? || name.blank?
       puts "Error: Channel ID and name are required."
+    elsif channel_id !~ /^\d+$/
+      puts "Error: Channel ID must be numeric."
     else
-      channel = Gaggle::Channel.find(channel_id)
-      channel.update(name: name)
-      message = {
-        status: "success",
-        message: "Updated channel with ID: #{channel.id} and name: #{channel.name}"
-      }
-      puts JSON.generate(message)
+      begin
+        channel = Gaggle::Channel.find(channel_id)
+        channel.update!(name: name)
+        message = {
+          status: "success",
+          message: "Updated channel with ID: #{channel.id} and name: #{channel.name}"
+        }
+        puts JSON.generate(message)
+      rescue ActiveRecord::RecordNotFound
+        puts "Error: Gaggle::Channel with ID #{channel_id} not found."
+      rescue ActiveRecord::RecordInvalid => e
+        puts "Error: Channel update failed - #{e.message}"
+      end
     end
   end
 
@@ -61,54 +77,75 @@ namespace :gaggle do
 
     if channel_id.blank?
       puts "Error: Channel ID is required."
+    elsif channel_id !~ /^\d+$/
+      puts "Error: Channel ID must be numeric."
     else
-      channel = Gaggle::Channel.find(channel_id)
-      channel.destroy
-      message = {
-        status: "success",
-        message: "Deleted channel with ID: #{channel.id}"
-      }
-      puts JSON.generate(message)
+      begin
+        channel = Gaggle::Channel.find(channel_id)
+        channel.destroy!
+        message = {
+          status: "success",
+          message: "Deleted channel with ID: #{channel.id}"
+        }
+        puts JSON.generate(message)
+      rescue ActiveRecord::RecordNotFound
+        puts "Error: Gaggle::Channel with ID #{channel_id} not found."
+      end
     end
   end
 
   desc <<-DESC
   Retrieves all messages from a specific channel
-  To use: bin/rails gaggle:get_channel_messages channel_id={id}
-          Replace {id} with the actual channel ID.
-          This will return new messages since the last time the task was run.
-          If there are no new messages, it will return all messages.
+  To use: bin/rails gaggle:get_channel_messages channel_id={id} GOOSE_ID={goose_id}
+          Replace {id} with the channel ID and {goose_id} with the goose ID.
+          Returns messages since the last unread notification, or all if none.
   DESC
   task get_channel_messages: :environment do
     channel_id = ENV["channel_id"]
     goose_id = ENV["GOOSE_ID"]
-    goose = Gaggle::Goose.find(goose_id)
 
-    if channel_id.blank?
-      puts "Error: Channel ID is required."
+    if channel_id.blank? || goose_id.blank?
+      puts "Error: Channel ID and Goose ID are required."
+    elsif channel_id !~ /^\d+$/ || goose_id !~ /^\d+$/
+      puts "Error: Channel ID and Goose ID must be numeric."
     else
-      channel = Gaggle::Channel.find(channel_id)
-      notification = goose.notifications.unread.for_messageable(channel).first
-      messages = channel.messages.later_than(notification&.message&.created_at).map do |message|
-        { content: message.content, user_name: message.user_name, user_id: message.goose_id }
+      begin
+        goose = Gaggle::Goose.find(goose_id)
+        channel = Gaggle::Channel.find(channel_id)
+        notification = goose.notifications.unread.for_messageable(channel).first
+        messages = channel.messages.later_than(notification&.message&.created_at).map do |message|
+          { content: message.content, user_name: message.user_name, user_id: message.goose_id }
+        end
+        puts JSON.generate(messages)
+        notification&.mark_read!
+      rescue ActiveRecord::RecordNotFound => e
+        puts "Error: #{e.message.include?('Goose') ? 'Gaggle::Goose' : 'Gaggle::Channel'} with ID #{e.message.include?('Goose') ? goose_id : channel_id} not found."
       end
-      puts JSON.generate(messages)
-      notification&.mark_read!
     end
   end
 
   desc <<-DESC
-    Retrieves list of channels with unread messages
-    To use: bin/rails gaggle:get_unread_channels
+  Retrieves list of channels with unread messages
+  To use: bin/rails gaggle:get_unread_channels GOOSE_ID={goose_id}
+          Replace {goose_id} with the goose ID.
   DESC
   task get_unread_channels: :environment do
     goose_id = ENV["GOOSE_ID"]
-    goose = Gaggle::Goose.find(goose_id)
 
-    messageables = goose.notifications.unread.messageables.map do |messageable|
-      { type: messageable.class, id: messageable.id }
+    if goose_id.blank?
+      puts "Error: Goose ID is required."
+    elsif goose_id !~ /^\d+$/
+      puts "Error: Goose ID must be numeric."
+    else
+      begin
+        goose = Gaggle::Goose.find(goose_id)
+        messageables = goose.notifications.unread.messageables.map do |messageable|
+          { type: messageable.class.name, id: messageable.id }
+        end
+        puts JSON.generate(messageables)
+      rescue ActiveRecord::RecordNotFound
+        puts "Error: Gaggle::Goose with ID #{goose_id} not found."
+      end
     end
-
-    puts JSON.generate(messageables)
   end
 end

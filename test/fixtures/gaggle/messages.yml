@@ -1,0 +1,11 @@
+message_one:
+  messageable: channel_one
+  messageable_type: Gaggle::Channel
+  goose: goose_one
+  content: Hello from goose_one in channel_one
+
+message_two:
+  messageable: channel_two
+  messageable_type: Gaggle::Channel
+  goose: goose_two
+  content: Hello from goose_two in channel_two
