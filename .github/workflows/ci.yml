@@ -2,80 +2,36 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   test:
-    name: Run Minitest Suite
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        ruby: ["3.2"]
-        rails: ["7.2.1", "8.0.0"]
-        asset_pipeline: ["sprockets"] # Default for 7.2 and one 8.0 variant
-        include:
-          # Rails 8 with Propshaft
-          - ruby: "3.2"
-            rails: "8.0.0"
-            asset_pipeline: "propshaft"
-
-    env:
-      RAILS_ENV: test
-      BUNDLE_PATH: vendor/bundle
-      BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile
-
+        ruby: ['3.2']  # Only Ruby 3.2
+        appraisal: ['rails-7.2', 'rails-8-sprockets', 'rails-8-propshaft']
+      fail-fast: true  # Stop on first failure
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v2
+      - name: Cache gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.appraisal }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.appraisal }}-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
-
-      - name: Install SQLite
-        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
-
-      - name: Configure Gemfile with Rails and Asset Pipeline
+      - name: Install dependencies
         run: |
-          # Set Rails version
-          sed -i "s/gem 'rails', .*/gem 'rails', '${{ matrix.rails }}'/" Gemfile
-          # Handle asset pipeline
-          if [ "${{ matrix.asset_pipeline }}" = "propshaft" ]; then
-            echo "gem 'propshaft'" >> Gemfile
-            # Remove Sprockets for Rails 8 with Propshaft
-            sed -i "/gem 'sprockets'/d" Gemfile
-          else
-            # Ensure Sprockets for Rails 7.2 and Rails 8 Sprockets variant
-            if ! grep -q "gem 'sprockets'" Gemfile; then
-              echo "gem 'sprockets'" >> Gemfile
-            fi
-          fi
-          cat Gemfile # Debug output
-        env:
-          RAILS_VERSION: ${{ matrix.rails }}
-
-      - name: Bundle install
-        run: |
-          bundle install --jobs 4 --retry 3
-
-      - name: Set up test database
-        run: bundle exec rails db:prepare
-        env:
-          DATABASE_URL: sqlite3::memory
-
+          gem install bundler
+          bundle install
+      - name: Install appraisals
+        run: bundle exec appraisal install
       - name: Run tests
-        run: bundle exec rails test
-
-      - name: Upload test artifacts
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-logs-${{ matrix.ruby }}-${{ matrix.rails }}-${{ matrix.asset_pipeline }}
-          path: log/test.log
+        run: bundle exec appraisal ${{ matrix.appraisal }} rails test --verbose
