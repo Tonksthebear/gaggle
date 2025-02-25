@@ -35,8 +35,8 @@ jobs:
         run: bundle exec appraisal install
       - name: Migrate test database
         run: |
-          mkdir -p test/dummy/db  # Ensure db directory exists
-          ln -sf ../../gaggle_migrate test/dummy/db/migrate  # Link engine migrations
-          bundle exec appraisal ${{ matrix.appraisal }} rails db:migrate RAILS_ENV=test
+          mkdir -p test/dummy/db
+          ln -sf ../../db/gaggle_migrate test/dummy/db/migrate  # Adjust if path differs
+          bundle exec appraisal ${{ matrix.appraisal }} rails app:db:migrate RAILS_ENV=test
       - name: Run tests
         run: bundle exec appraisal ${{ matrix.appraisal }} rails test --verbose
