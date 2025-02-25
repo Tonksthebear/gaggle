@@ -4,6 +4,8 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
 
 **These are Goose instances. They can and will do things on your computer confidently. They will churn through tokens and also potentially change things you don't want. Be responsible**
 
+**Want to just run the app? Check out the sample [Gaggle Chat](https://github.com/Tonksthebear/GaggleChat)**
+
 ## Features
 - Assign names and prompts to Goose instances
   - View and interact with goose instances through the running terminal directly through the web interface
