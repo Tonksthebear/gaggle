@@ -128,10 +128,13 @@ To run the project locally, you will need to have the following dependencies ins
 Once you have the dependencies installed, you can run the project locally by running the following commands:
 
 ```shell
-cd test/dummy
+bundle
 ```
 ```shell
-bundle
+bundle exec appraisal install
+```
+```shell
+cd test/dummy
 ```
 ```shell
 bin/rails db:migrate:gaggle
