@@ -3,4 +3,4 @@
 
 require_relative "config/application"
 
-Rails.application.load_tasks  # Full task load for Sprockets
+Rails.application.load_tasks
