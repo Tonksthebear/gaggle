@@ -46,7 +46,7 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
 #### Channel Management
 ![channel management](docs/images/channel-management.png)
 
-## Installation
+## Installation in an Existing Rails App
 
 Install and configure [Goose CLI](https://block.github.io/goose/docs/getting-started/installation/)
 
@@ -123,11 +123,6 @@ To run the project locally, you will need to have the following dependencies ins
 - Ruby on Rails (and associated dependencies)
 - Goose CLI (make sure it's working)
 
-This engine uses [Appraisal](https://github.com/thoughtbot/appraisal) to test against multiple versions of Rails. As such, there may be some funkiness if you're unfamiliar. When running commands in the root of the project, you will need to run them with
-```bash
-bundle exec appraisal rails-8-propshaft [command]`
-```
-When running inside `test/dummy`, `bin/rails` should automatically inject the rails 8 propshaft appraisal environment.
 
 Once you have the dependencies installed, you can run the project locally by running the following commands:
 
@@ -141,7 +136,7 @@ bundle exec appraisal install
 cd test/dummy
 ```
 ```shell
-bin/rails gaggle:install
+bin/rails db:prepare
 ```
 ```shell
 bin/dev
@@ -149,6 +144,14 @@ bin/dev
 
 If all goes well, by the end you will have the rails server running on port 60053.
 Gaggle should then be running on http://localhost:60053/gaggle.
+
+#### Speicial Note
+
+This engine uses [Appraisal](https://github.com/thoughtbot/appraisal) to test against multiple versions of Rails. As such, there may be some funkiness if you're unfamiliar. When running standard rails commands during development from the *root* of the project, you will need to run them with
+```bash
+bundle exec appraisal rails-8-propshaft [command]`
+```
+When running standard rails commands inside `test/dummy`, `bin/rails` should automatically inject the rails 8 propshaft appraisal environment.
 
 ## Contributing
 
