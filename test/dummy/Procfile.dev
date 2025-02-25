@@ -1,2 +1,2 @@
-web: bin/rails server
-css: cd ../.. && echo $PWD && bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/stylesheets/gaggle/tailwind.css -w
+web: BUNDLE_GEMFILE=../../gemfiles/rails_8_propshaft.gemfile bundle exec rails server
+css: cd ../.. && bundle exec tailwindcss -i app/assets/stylesheets/application.css -o app/assets/stylesheets/gaggle/tailwind.css -w
