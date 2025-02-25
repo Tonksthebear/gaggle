@@ -1,4 +1,4 @@
-class AddDeliveredAtToNotification < ActiveRecord::Migration[8.0]
+class AddDeliveredAtToNotification < ActiveRecord::Migration[6.0]
   def change
     add_column :gaggle_notifications, :delivered_at, :datetime
   end
