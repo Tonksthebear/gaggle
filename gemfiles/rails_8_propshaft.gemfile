@@ -15,6 +15,7 @@ gem "solid_cable"
 gem "strings-ansi"
 gem "appraisal"
 gem "rails", "8.0.0"
+gem "propshaft"
 
 group :development do
   gem "web-console"

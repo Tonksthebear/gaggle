@@ -10,4 +10,5 @@ end
 
 appraise 'rails-8-propshaft' do
   gem 'rails', '8.0.0'  # Test Rails 8 with Propshaft (default)
+  gem 'propshaft'
 end

@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    gaggle (0.1.7)
+    gaggle (0.1.8)
       classy-yaml
       rails (>= 7.2)
       strings-ansi
@@ -156,6 +156,11 @@ GEM
       prettyprint
     prettier_print (1.2.1)
     prettyprint (0.2.0)
+    propshaft (1.1.0)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
+      railties (>= 7.0.0)
     psych (5.2.3)
       date
       stringio
@@ -253,9 +258,6 @@ GEM
     strings-ansi (0.2.0)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
-    tailwindcss-rails (4.1.0)
-      railties (>= 7.0.0)
-      tailwindcss-ruby (~> 4.0)
     tailwindcss-ruby (4.0.8-arm64-darwin)
     thor (1.3.2)
     timeout (0.4.3)
@@ -291,6 +293,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   mocha
+  propshaft
   puma
   rails (= 8.0.0)
   rubocop-rails-omakase
@@ -298,7 +301,6 @@ DEPENDENCIES
   sqlite3
   stimulus-rails
   strings-ansi
-  tailwindcss-rails
   tailwindcss-ruby
   turbo-rails
   web-console
