@@ -30,6 +30,7 @@ module Gaggle
       app.config.assets.paths << Engine.root.join("app", "javascript")
       if defined?(Importmap::Engine)
         app.config.importmap.paths << Engine.root.join("config/importmap.rb")
+        app.config.importmap.cache_sweepers << Engine.root.join("app/javascript")
       end
     end
 

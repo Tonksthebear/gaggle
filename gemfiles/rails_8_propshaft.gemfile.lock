@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    gaggle (0.1.11)
+    gaggle (0.1.12)
       classy-yaml
       rails (>= 7.2)
       strings-ansi
@@ -103,8 +103,13 @@ GEM
     erb-formatter (0.7.3)
       syntax_tree (~> 6.0)
     erubi (1.13.1)
+    ffi (1.17.1-arm64-darwin)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hotwire-spark (0.1.13)
+      listen
+      rails (>= 7.0.0)
+      zeitwerk
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -122,6 +127,9 @@ GEM
     json (2.10.1)
     language_server-protocol (3.17.0.4)
     lint_roller (1.1.0)
+    listen (3.9.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.6.6)
     loofah (2.24.0)
       crass (~> 1.0.2)
@@ -206,6 +214,9 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
+    rb-fsevent (0.11.2)
+    rb-inotify (0.11.1)
+      ffi (~> 1.0)
     rdoc (6.12.0)
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
@@ -290,6 +301,7 @@ DEPENDENCIES
   classy-yaml
   erb-formatter
   gaggle!
+  hotwire-spark
   importmap-rails
   jbuilder
   mocha

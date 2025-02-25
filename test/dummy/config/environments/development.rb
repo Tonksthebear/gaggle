@@ -66,4 +66,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Hotwire Spark
+  config.hotwire.spark.html_paths << Gaggle::Engine.root.join("app/views")
+  config.hotwire.spark.css_paths << Gaggle::Engine.root.join("app/assets/stylesheets/gaggle")
+  config.hotwire.spark.stimulus_paths << Gaggle::Engine.root.join("app/javascript/controllers/gaggle")
 end

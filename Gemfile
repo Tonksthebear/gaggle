@@ -21,6 +21,7 @@ gem "strings-ansi"
 group :development do
   gem "web-console"
   gem "tailwindcss-ruby"
+  gem "hotwire-spark"
 end
 
 group :test do

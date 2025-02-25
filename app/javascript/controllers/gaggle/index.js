@@ -1,6 +1,4 @@
 // Import and register all your controllers from the importmap via controllers/**/*_controller
-// import { application } from "controllers/application"
-// import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-// eagerLoadControllersFrom("controllers/gaggle", application)
-
-// alert("Gaggle is loaded!")
+import { gaggleApplication } from "controllers/gaggle/application"
+import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
+lazyLoadControllersFrom("controllers/gaggle", gaggleApplication)

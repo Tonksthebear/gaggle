@@ -20,6 +20,7 @@ gem "sprockets-rails"
 group :development do
   gem "web-console"
   gem "tailwindcss-ruby"
+  gem "hotwire-spark"
 end
 
 group :test do
