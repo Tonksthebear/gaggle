@@ -3,9 +3,4 @@
 
 require_relative "config/application"
 
-if Gem.loaded_specs.key?("sprockets-rails")
-  Rails.application.load_tasks  # Full task load for Sprockets
-else
-  # Load only core tasks for Propshaft, avoiding asset-specific ones
-  Rake.application.load_imports  # Loads lib/tasks/*.rake if any
-end
+Rails.application.load_tasks  # Full task load for Sprockets
