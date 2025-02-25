@@ -16,6 +16,16 @@ module Gaggle
       end
     end
 
+    initializer "gaggle.assets" do |app|
+      if Gem.loaded_specs.key?("sprockets-rails")
+        # Sprockets configuration
+        Rails.logger.info "Gaggle: Detected sprockets-rails, configuring for Sprockets"
+        app.config.assets.paths << root.join("app/assets/stylesheets")
+        app.config.assets.paths << root.join("app/javascript")
+        app.config.assets.precompile += %w[ gaggle_manifest ]
+      end
+    end
+
     initializer "gaggle.importmap.assets", before: "importmap" do |app|
       app.config.assets.paths << Engine.root.join("app", "javascript")
       if defined?(Importmap::Engine)
