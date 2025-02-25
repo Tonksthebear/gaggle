@@ -1,68 +1,36 @@
 name: CI
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
+    branches: [main]
 jobs:
   test:
-    name: Run Minitest Suite
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        ruby: ["2.7", "3.0", "3.2"]
-        rails: ["7.1", "8.0.0.beta1"]
+        ruby: ['2.7', '3.0', '3.2']
+        appraisal: ['rails-7.2', 'rails-8-sprockets', 'rails-8-propshaft']
         exclude:
-          - ruby: "3.2"
-            rails: "7.1" # Rails 7.1 max Ruby 3.1
-          - ruby: "2.7"
-            rails: "8.0.0.beta1" # Rails 8 min Ruby 3.1
-          - ruby: "3.0"
-            rails: "8.0.0.beta1" # Rails 8 min Ruby 3.1
-
-    env:
-      RAILS_ENV: test
-      BUNDLE_PATH: vendor/bundle
-      BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile
-
+          - ruby: '2.7'  # Rails 8 requires Ruby 3.2+
+            appraisal: 'rails-8-sprockets'
+          - ruby: '2.7'
+            appraisal: 'rails-8-propshaft'
+          - ruby: '3.0'
+            appraisal: 'rails-8-sprockets'
+          - ruby: '3.0'
+            appraisal: 'rails-8-propshaft'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v2
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
-
-      - name: Install SQLite
-        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
-
-      - name: Set Rails version in Gemfile
+      - name: Install dependencies
         run: |
-          sed -i "s/gem 'rails', .*/gem 'rails', '${{ matrix.rails }}'/" Gemfile
-          cat Gemfile # Debug output
-        env:
-          RAILS_VERSION: ${{ matrix.rails }}
-
-      - name: Bundle install
-        run: |
-          bundle install --jobs 4 --retry 3
-
-      - name: Set up test database
-        run: bundle exec rails db:prepare
-        env:
-          DATABASE_URL: sqlite3::memory
-
+          gem install bundler
+          bundle install
+      - name: Install appraisals
+        run: bundle exec appraisal install
       - name: Run tests
-        run: bundle exec rails test
-
-      - name: Upload test artifacts
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-logs-${{ matrix.ruby }}-${{ matrix.rails }}
-          path: log/test.log
+        run: bundle exec appraisal ${{ matrix.appraisal }} rake test

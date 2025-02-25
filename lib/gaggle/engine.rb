@@ -17,20 +17,28 @@ module Gaggle
     end
 
     initializer "gaggle.assets" do |app|
-      app.config.assets.precompile << Engine.root.join("app/assets/gaggle/builds/application.css")
+      if Gem.loaded_specs.key?("sprockets-rails")  # Check if sprockets-rails is in the host app
+        # Sprockets setup
+        Rails.logger.info "Gaggle: Detected sprockets-rails, configuring for Sprockets"
+        app.config.assets.paths << Engine.root.join("app", "assets", "stylesheets")
+        app.config.assets.precompile += %w[gaggle/tailwind.css]  # Adjust for your assets
+      else
+        # Propshaft setup
+        Rails.logger.info "Gaggle: No sprockets-rails detected, configuring for Propshaft"
+        app.config.paths.add Engine.root.join("app", "assets", "stylesheets")
+      end
     end
 
-    initializer "gaggle.tailwindcss" do |app|
-      app.config.assets.paths << Engine.root.join("app/assets/gaggle/builds/application.css")
-    end
-
-    initializer "gaggle.importmap", before: "importmap" do |app|
-      app.config.importmap.paths << Engine.root.join("config/importmap.rb")
-      app.config.importmap.cache_sweepers << Engine.root.join("app/gaggle/javascript")
-    end
-
-    initializer "gaggle.importmap.assets" do |app|
-      app.config.assets.paths << Engine.root.join("app/javascript")
+    initializer "gaggle.importmap.assets", before: "importmap" do |app|
+      javascript_path = Engine.root.join("app", "gaggle", "javascript")
+      if Gem.loaded_specs.key?("sprockets-rails")
+        app.config.assets.paths << javascript_path
+      else
+        app.config.paths.add javascript_path
+      end
+      if defined?(Importmap::Engine)
+        app.config.importmap.paths << javascript_path
+      end
     end
 
     initializer "gaggle.autoloader" do |app|
