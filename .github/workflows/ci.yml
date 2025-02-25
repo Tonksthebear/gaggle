@@ -1,9 +1,11 @@
 name: CI
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -33,4 +35,4 @@ jobs:
       - name: Install appraisals
         run: bundle exec appraisal install
       - name: Run tests
-        run: bundle exec appraisal ${{ matrix.appraisal }} rake test
+        run: bundle exec appraisal ${{ matrix.appraisal }} rails test --verbose
