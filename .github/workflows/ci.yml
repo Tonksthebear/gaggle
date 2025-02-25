@@ -37,6 +37,6 @@ jobs:
         run: |
           mkdir -p test/dummy/db
           ln -sf ../../db/gaggle_migrate test/dummy/db/migrate  # Adjust if path differs
-          bundle exec appraisal ${{ matrix.appraisal }} rails db:migrate:gaggle RAILS_ENV=test
+          bundle exec appraisal ${{ matrix.appraisal }} rails db:migrate RAILS_ENV=test
       - name: Run tests
         run: bundle exec appraisal ${{ matrix.appraisal }} rails test --verbose
