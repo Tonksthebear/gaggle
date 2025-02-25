@@ -1,7 +1,7 @@
 # Active Context for Gaggle Rails Engine Model Design
 
 ## Overview
-This document summarizes the current model design and business logic for the Gaggle Rails Engine. The engine is intended for development purposes and uses a simplified mechanism for a single “user” – when a message’s sender (`goose_id`) is nil, it indicates that the message was sent by the user.
+This document summarizes the current model design and business logic for the Gaggle Rails Engine. The engine is intended for development purposes and uses a simplified mechanism for a single "user" – when a message's sender (`goose_id`) is nil, it indicates that the message was sent by the user.
 
 ## Models and Their Structures
 
@@ -39,6 +39,7 @@ This document summarizes the current model design and business logic for the Gag
 ### Gaggle::Notification
 - **Attributes:**
   - `read_at` (timestamp, indicates when the notification was seen)
+  - `delivered_at` (timestamp, indicates when the notification was delivered)
   - `message_id` (foreign key to the triggering message)
   - `goose_id` (foreign key to `Gaggle::Goose`; optional – a nil value implies the notification is for the user)
   - `messageable_id` (foreign key to the triggering message or channel)
@@ -47,6 +48,24 @@ This document summarizes the current model design and business logic for the Gag
   - Belongs to a `Gaggle::Goose` (optional)
   - Belongs to a `Gaggle::Message`
   - Belongs to a `messageable`, polymorphic: true
+
+### Gaggle::Session
+- **Implementation Details:**
+  - Uses class-level `running_executables` hash to track active sessions
+  - Thread-safe command submission with queue system
+  - Real-time output broadcasting using ActionCable
+  - Session-specific logging with structured file organization
+  - Input control with 3-second output silence requirement
+- **Key Methods:**
+  - `start_executable`: Initializes PTY and manages threads
+  - `write_to_executable`: Thread-safe command submission
+  - `stop_executable`: Clean session termination
+  - `running?`: Session status check
+- **Thread Safety:**
+  - Uses mutex locks for synchronization
+  - Implements condition variables for thread coordination
+  - Ensures proper cleanup of resources
+  - Handles timeouts and error conditions
 
 ## Key Design Decisions
 - **Namespacing:** All models are defined under the `Gaggle` module to avoid conflicts and ensure smooth integration with host applications.
@@ -72,6 +91,11 @@ This document summarizes the current model design and business logic for the Gag
   - Updated form partials with a card-style layout.
 - Modified the sessions table to label sessions by their number instead of their ID.
 - Reverted the change to make the sessions table scrollable.
+- Implemented CI pipeline with GitHub Actions
+- Added support for both Propshaft and Sprockets asset pipelines
+- Created join table for channel-goose relationships
+- Added notification delivery tracking
+- Implemented robust thread management in sessions with input control
 
 ## Next Steps
 - Implement models and migrations for the above structure.
