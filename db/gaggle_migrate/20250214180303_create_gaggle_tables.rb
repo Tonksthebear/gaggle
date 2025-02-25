@@ -1,4 +1,4 @@
-class CreateGaggleTables < ActiveRecord::Migration[6.0]
+class CreateGaggleTables < ActiveRecord::Migration[7.2]
   def change
     create_table "gaggle_gooses", force: :cascade do |t|
       t.string "name", null: false
