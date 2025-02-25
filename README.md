@@ -114,16 +114,18 @@ None yet
 - Configure team structure
 - Include more presets (personalities, team structure, channels)
 
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub.
-
-### Running locally
+### Running this repo locally
 
 To run the project locally, you will need to have the following dependencies installed:
 
 - Ruby on Rails (and associated dependencies)
 - Goose CLI (make sure it's working)
+
+This engine uses [Appraisal](https://github.com/thoughtbot/appraisal) to test against multiple versions of Rails. As such, there may be some funkiness if you're unfamiliar. When running commands in the root of the project, you will need to run them with
+```bash
+bundle exec appraisal rails-8-propshaft [command]`
+```
+When running inside `test/dummy`, `bin/rails` should automatically inject the rails 8 propshaft appraisal environment.
 
 Once you have the dependencies installed, you can run the project locally by running the following commands:
 
@@ -137,7 +139,7 @@ bundle exec appraisal install
 cd test/dummy
 ```
 ```shell
-bin/rails db:migrate:gaggle
+bin/rails gaggle:install
 ```
 ```shell
 bin/dev
@@ -145,6 +147,10 @@ bin/dev
 
 If all goes well, by the end you will have the rails server running on port 60053.
 Gaggle should then be running on http://localhost:60053/gaggle.
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub. 
 
 ### Bonus
 Since this was built with Cline, your cline should be able to use the [memory bank](https://docs.cline.bot/improving-your-prompting-skills/custom-instructions-library/cline-memory-bank) as well. Configure the prompt as instructed and have fun
