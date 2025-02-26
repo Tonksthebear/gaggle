@@ -1,7 +1,50 @@
 namespace :gaggle do
+  # Shared method to process channel creation/update
+  def process_channel(channel_id: nil, name:, goose_ids:)
+    if name.blank?
+      puts "Error: Channel name is required."
+      return
+    end
+    if channel_id&.present? && channel_id !~ /^\d+$/
+      puts "Error: Channel ID must be numeric."
+      return
+    end
+    if goose_ids&.any? { |id| id !~ /^\d+$/ }
+      puts "Error: All goose IDs must be numeric."
+      return
+    end
+
+    begin
+      channel = channel_id ? Gaggle::Channel.find(channel_id) : Gaggle::Channel.new
+      channel.name = name
+
+      if goose_ids.present?
+        goose_ids = goose_ids.map(&:to_i)
+        missing_ids = goose_ids - Gaggle::Goose.where(id: goose_ids).pluck(:id)
+        if missing_ids.any?
+          puts "Error: Gaggle::Goose IDs not found: #{missing_ids.join(', ')}"
+          return
+        end
+        channel.goose_ids = goose_ids
+      end
+
+      action = channel.new_record? ? "Created" : "Updated"
+      channel.save!
+      message = {
+        status: "success",
+        message: "#{action} channel with ID: #{channel.id}, name: #{channel.name}, gooses: #{channel.goose_ids.join(', ')}"
+      }
+      puts JSON.generate(message)
+    rescue ActiveRecord::RecordNotFound
+      puts "Error: Gaggle::Channel with ID #{channel_id} not found."
+    rescue ActiveRecord::RecordInvalid => e
+      puts "Error: Channel #{action.downcase} failed - #{e.message}"
+    end
+  end
+
   desc <<-DESC
-  Retrieves all channels
-  To use: bin/rails gaggle:get_channels
+    Retrieves all channels
+    To use: bin/rails gaggle:get_channels
   DESC
   task get_channels: :environment do
     begin
@@ -15,62 +58,50 @@ namespace :gaggle do
   end
 
   desc <<-DESC
-  Creates a new channel with a given name
-  To use: bin/rails gaggle:create_channel name="{name}"
-          Replace {name} with the name of the channel
+  Creates a new channel with a given name and optional goose IDs
+  To use: bin/rails gaggle:create_channel name="{name}" [goose_ids="{ids}"]
+          Replace {name} with the name of the channel and {ids} with a comma-separated list of goose IDs (optional)
+          Only Goose that are included in the channel will receive messages from the channel.
   DESC
   task create_channel: :environment do
     name = ENV["name"]
-    if name.blank?
-      puts "Error: Channel name is required."
-    else
-      begin
-        channel = Gaggle::Channel.create!(name: name)
-        message = {
-          status: "success",
-          message: "Created channel with ID: #{channel.id} and name: #{channel.name}"
-        }
-        puts JSON.generate(message)
-      rescue ActiveRecord::RecordInvalid => e
-        puts "Error: Channel creation failed - #{e.message}"
-      end
+    # Keep everything as strings initially
+    goose_ids = ENV["goose_ids"]&.split(",")&.map(&:strip) || []
+    # Add GOOSE_ID if present and numeric, as a string
+    if ENV["GOOSE_ID"]&.match?(/^\d+$/)
+      goose_ids << ENV["GOOSE_ID"]
     end
+
+    # Validate that all IDs are numeric strings before any conversion
+    if goose_ids.any? { |id| !(id =~ /^\d+$/) }
+      puts "Error: All goose IDs must be numeric."
+      next
+    end
+
+    process_channel(name: name, goose_ids: goose_ids)
   end
 
   desc <<-DESC
-  Updates a channel with a given name
-  To use: bin/rails gaggle:update_channel channel_id={id} name="{name}"
-          Replace {id} with channel id and {name} with the new name
+    Updates a channel with a given name and optional goose IDs
+    To use: bin/rails gaggle:update_channel channel_id={id} name="{name}" [goose_ids="{ids}"]
+            Replace {id} with channel id, {name} with the new name, and {ids} with a comma-separated list of goose IDs (optional)
   DESC
   task update_channel: :environment do
     channel_id = ENV["channel_id"]
     name = ENV["name"]
+    goose_ids = ENV["goose_ids"]&.split(",")&.map(&:strip)
 
-    if channel_id.blank? || name.blank?
+    if channel_id.blank?
       puts "Error: Channel ID and name are required."
-    elsif channel_id !~ /^\d+$/
-      puts "Error: Channel ID must be numeric."
     else
-      begin
-        channel = Gaggle::Channel.find(channel_id)
-        channel.update!(name: name)
-        message = {
-          status: "success",
-          message: "Updated channel with ID: #{channel.id} and name: #{channel.name}"
-        }
-        puts JSON.generate(message)
-      rescue ActiveRecord::RecordNotFound
-        puts "Error: Gaggle::Channel with ID #{channel_id} not found."
-      rescue ActiveRecord::RecordInvalid => e
-        puts "Error: Channel update failed - #{e.message}"
-      end
+      process_channel(channel_id: channel_id, name: name, goose_ids: goose_ids)
     end
   end
 
   desc <<-DESC
-  Deletes a channel with a given ID
-  To use: bin/rails gaggle:delete_channel channel_id={id}
-          Replace {id} with channel id
+    Deletes a channel with a given ID
+    To use: bin/rails gaggle:delete_channel channel_id={id}
+            Replace {id} with channel id
   DESC
   task delete_channel: :environment do
     channel_id = ENV["channel_id"]
@@ -95,10 +126,10 @@ namespace :gaggle do
   end
 
   desc <<-DESC
-  Retrieves all messages from a specific channel
-  To use: bin/rails gaggle:get_channel_messages channel_id={id} GOOSE_ID={goose_id}
-          Replace {id} with the channel ID and {goose_id} with the goose ID.
-          Returns messages since the last unread notification, or all if none.
+    Retrieves all messages from a specific channel
+    To use: bin/rails gaggle:get_channel_messages channel_id={id} GOOSE_ID={goose_id}
+            Replace {id} with the channel ID and {goose_id} with the goose ID.
+            Returns messages since the last unread notification, or all if none.
   DESC
   task get_channel_messages: :environment do
     channel_id = ENV["channel_id"]
@@ -125,9 +156,9 @@ namespace :gaggle do
   end
 
   desc <<-DESC
-  Retrieves list of channels with unread messages
-  To use: bin/rails gaggle:get_unread_channels GOOSE_ID={goose_id}
-          Replace {goose_id} with the goose ID.
+    Retrieves list of channels with unread messages
+    To use: bin/rails gaggle:get_unread_channels GOOSE_ID={goose_id}
+            Replace {goose_id} with the goose ID.
   DESC
   task get_unread_channels: :environment do
     goose_id = ENV["GOOSE_ID"]

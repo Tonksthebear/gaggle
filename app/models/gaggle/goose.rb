@@ -1,14 +1,15 @@
 module Gaggle
   class Goose < ApplicationRecord
-    SERVER_URL = "http://localhost:3000"
+    SERVER_URL = "http://localhost:60053"
     self.table_name = "gaggle_gooses"
     include Goose::PersonalityDefaults
 
-    has_many :sessions
-    has_many :messages
+    default_scope { order(created_at: :asc) }
+
+    has_many :messages, dependent: :destroy
     has_many :private_messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
-    has_many :sessions
-    has_many :notifications
+    has_many :sessions, dependent: :destroy
+    has_many :notifications, dependent: :destroy
     has_many :recipient_notifications, class_name: "Gaggle::Notification", as: :messageable
     has_and_belongs_to_many :channels
 
