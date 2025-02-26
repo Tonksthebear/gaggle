@@ -1,5 +1,5 @@
 <%# locals: (message:) %>
 
 <div id="<%= dom_id(message) %>" class="m-2 prose">
-  <strong><%= message.user_name || "Human" %>:</strong><%= simple_format(message.content) %>
+  <strong><%= message.user_name || "Human" %>:</strong><%= simple_format message.markdown_content %>
 </div>

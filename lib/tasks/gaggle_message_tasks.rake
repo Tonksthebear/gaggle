@@ -2,7 +2,7 @@
 namespace :gaggle do
   desc <<-DESC
   Sends a message to a specific channel
-  To use: bin/rails gaggle:send_public_message channel_id={id} goose_id={id} content="{content}"
+  To use: bin/rails gaggle:send_public_message channel_id={id} content="{content}"
           Replace {id} with channel/goose IDs and {content} with the message content.
           Escape quotes in {content} if needed (e.g., "Hello \"world\"").
           If content is omitted, it will read from STDIN.
@@ -10,7 +10,7 @@ namespace :gaggle do
 
   task send_public_message: :environment do
     channel_id = ENV["channel_id"]
-    goose_id = ENV["goose_id"]
+    goose_id = ENV["GOOSE_ID"]
     content = ENV["content"].presence || (STDIN.tty? ? nil : STDIN.read.chomp)
 
     if channel_id.blank? || goose_id.blank? || content.blank?

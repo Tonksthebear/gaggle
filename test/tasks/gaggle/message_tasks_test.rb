@@ -5,13 +5,13 @@ require "mocha/minitest"
 class GaggleTasksTest < ActiveSupport::TestCase
   teardown do
     ENV["channel_id"] = nil
-    ENV["goose_id"] = nil
+    ENV["GOOSE_ID"] = nil
     ENV["content"] = nil
   end
 
   test "send_public_message fails when channel_id is blank" do
     ENV["channel_id"] = nil
-    ENV["goose_id"] = gaggle_gooses(:goose_one).id.to_s
+    ENV["GOOSE_ID"] = gaggle_gooses(:goose_one).id.to_s
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -20,9 +20,9 @@ class GaggleTasksTest < ActiveSupport::TestCase
     end
   end
 
-  test "send_public_message fails when goose_id is blank" do
+  test "send_public_message fails when GOOSE_ID is blank" do
     ENV["channel_id"] = gaggle_channels(:channel_one).id.to_s
-    ENV["goose_id"] = nil
+    ENV["GOOSE_ID"] = nil
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -33,7 +33,7 @@ class GaggleTasksTest < ActiveSupport::TestCase
 
   test "send_public_message fails when content is blank" do
     ENV["channel_id"] = gaggle_channels(:channel_one).id.to_s
-    ENV["goose_id"] = gaggle_gooses(:goose_one).id.to_s
+    ENV["GOOSE_ID"] = gaggle_gooses(:goose_one).id.to_s
     ENV["content"] = nil
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -44,7 +44,7 @@ class GaggleTasksTest < ActiveSupport::TestCase
 
   test "send_public_message fails when channel_id is non-numeric" do
     ENV["channel_id"] = "abc"
-    ENV["goose_id"] = gaggle_gooses(:goose_one).id.to_s
+    ENV["GOOSE_ID"] = gaggle_gooses(:goose_one).id.to_s
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -53,9 +53,9 @@ class GaggleTasksTest < ActiveSupport::TestCase
     end
   end
 
-  test "send_public_message fails when goose_id is non-numeric" do
+  test "send_public_message fails when GOOSE_ID is non-numeric" do
     ENV["channel_id"] = gaggle_channels(:channel_one).id.to_s
-    ENV["goose_id"] = "xyz"
+    ENV["GOOSE_ID"] = "xyz"
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -66,7 +66,7 @@ class GaggleTasksTest < ActiveSupport::TestCase
 
   test "send_public_message fails when channel_id is invalid" do
     ENV["channel_id"] = "9999"
-    ENV["goose_id"] = gaggle_gooses(:goose_one).id.to_s
+    ENV["GOOSE_ID"] = gaggle_gooses(:goose_one).id.to_s
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -75,9 +75,9 @@ class GaggleTasksTest < ActiveSupport::TestCase
     end
   end
 
-  test "send_public_message fails when goose_id is invalid" do
+  test "send_public_message fails when GOOSE_ID is invalid" do
     ENV["channel_id"] = gaggle_channels(:channel_one).id.to_s
-    ENV["goose_id"] = "9999"
+    ENV["GOOSE_ID"] = "9999"
     ENV["content"] = "Hello"
     task = Rake::Task["gaggle:send_public_message"]
     task.reenable
@@ -90,7 +90,7 @@ class GaggleTasksTest < ActiveSupport::TestCase
     channel = gaggle_channels(:channel_one)
     goose = gaggle_gooses(:goose_one)
     ENV["channel_id"] = channel.id.to_s
-    ENV["goose_id"] = goose.id.to_s
+    ENV["GOOSE_ID"] = goose.id.to_s
     ENV["content"] = "Hello from test"
 
     task = Rake::Task["gaggle:send_public_message"]
@@ -111,7 +111,7 @@ class GaggleTasksTest < ActiveSupport::TestCase
     channel = gaggle_channels(:channel_one)
     goose = gaggle_gooses(:goose_one)
     ENV["channel_id"] = channel.id.to_s
-    ENV["goose_id"] = goose.id.to_s
+    ENV["GOOSE_ID"] = goose.id.to_s
     ENV["content"] = nil
 
     task = Rake::Task["gaggle:send_public_message"]

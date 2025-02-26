@@ -58,13 +58,26 @@ namespace :gaggle do
   end
 
   desc <<-DESC
-    Creates a new channel with a given name and optional goose IDs
-    To use: bin/rails gaggle:create_channel name="{name}" [goose_ids="{ids}"]
-            Replace {name} with the name of the channel and {ids} with a comma-separated list of goose IDs (optional)
+  Creates a new channel with a given name and optional goose IDs
+  To use: bin/rails gaggle:create_channel name="{name}" [goose_ids="{ids}"]
+          Replace {name} with the name of the channel and {ids} with a comma-separated list of goose IDs (optional)
+          Only Goose that are included in the channel will receive messages from the channel.
   DESC
   task create_channel: :environment do
     name = ENV["name"]
-    goose_ids = ENV["goose_ids"]&.split(",")&.map(&:strip)
+    # Keep everything as strings initially
+    goose_ids = ENV["goose_ids"]&.split(",")&.map(&:strip) || []
+    # Add GOOSE_ID if present and numeric, as a string
+    if ENV["GOOSE_ID"]&.match?(/^\d+$/)
+      goose_ids << ENV["GOOSE_ID"]
+    end
+
+    # Validate that all IDs are numeric strings before any conversion
+    if goose_ids.any? { |id| !(id =~ /^\d+$/) }
+      puts "Error: All goose IDs must be numeric."
+      next
+    end
+
     process_channel(name: name, goose_ids: goose_ids)
   end
 

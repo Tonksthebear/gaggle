@@ -21,6 +21,11 @@ module Gaggle
       goose&.name || "Human"
     end
 
+    def markdown_content
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+      markdown.render(content.gsub('\r\n', "\r\n").gsub('\n', "\n"))
+    end
+
     private
 
     def generate_notifications
