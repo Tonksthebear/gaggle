@@ -1,5 +1,6 @@
 goose_one:
   name: goose_one
+  created_at: <%= 1.day.ago %>
 
 goose_two:
   name: goose_two

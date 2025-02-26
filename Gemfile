@@ -13,7 +13,6 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "classy-yaml"
-gem "erb-formatter"
 gem "jbuilder"
 gem "solid_cable"  # Compatible with Rails 7.2+
 gem "strings-ansi"
@@ -22,6 +21,8 @@ group :development do
   gem "web-console"
   gem "tailwindcss-ruby"
   gem "hotwire-spark"
+  gem "erb_lint"
+  gem "erb-formatter"
 end
 
 group :test do
