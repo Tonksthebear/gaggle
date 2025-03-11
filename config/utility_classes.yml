@@ -1,19 +1,19 @@
 btn:
-  base: 'inline-flex justify-center items-center border border-transparent font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer px-4 py-2 text-sm rounded-md'
+  base: 'inline-flex justify-center items-center border border-transparent font-medium rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer px-4 py-2 text-sm rounded-md dark:focus:ring-offset-gray-800'
   xs: 'px-2.5 py-1.5 text-xs rounded'
   sm: 'px-3 py-2 text-sm rounded-md'
   lg: 'px-4 py-2 text-base rounded-md'
   xl: 'px-6 py-3 text-base rounded-md'
 
-  blue: 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 border-transparent'
-  light: 'text-gray-700 bg-white hover:bg-gray-50 focus:ring-gray-500 border-gray-300'
-  gray: 'text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-gray-500 border-gray-300 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-800 disabled:hover:bg-white'
-  danger: 'text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 border-transparent'
-  warning: 'text-white bg-yellow-400 hover:bg-yellow-600 focus:ring-yellow-300 border-transparent'
-  success: 'text-white bg-green-600 hover:bg-green-700 focus:ring-green-500 border-transparent'
+  blue: 'text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-400'
+  light: 'text-gray-700 bg-white hover:bg-gray-50 focus:ring-gray-500 border-gray-300 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 dark:focus:ring-gray-400'
+  gray: 'text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-gray-500 border-gray-300 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-offset-gray-800 disabled:hover:bg-white dark:disabled:hover:bg-gray-600'
+  danger: 'text-white bg-red-600 hover:bg-red-700 focus:ring-red-500 border-transparent dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-400'
+  warning: 'text-white bg-yellow-400 hover:bg-yellow-600 focus:ring-yellow-300 border-transparent dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:focus:ring-yellow-400'
+  success: 'text-white bg-green-600 hover:bg-green-700 focus:ring-green-500 border-transparent dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-400'
 
-  primary: 'text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 border-transparent'
-  secondary: 'text-secondary-700 bg-white hover:bg-secondary-50 focus:ring-secondary-500 border-secondary-300'
+  primary: 'text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500 border-transparent dark:bg-primary-500 dark:hover:bg-primary-600 dark:focus:ring-primary-400'
+  secondary: 'text-secondary-700 bg-white hover:bg-secondary-50 focus:ring-secondary-500 border-secondary-300 dark:text-secondary-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 dark:focus:ring-secondary-400'
 
   icon: 
     sm: 'ml-2 -mr-0.5 h-4 w-4'

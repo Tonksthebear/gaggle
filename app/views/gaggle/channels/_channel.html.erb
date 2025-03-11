@@ -1,9 +1,9 @@
 <%# locals: (channel:) %>
 
 <li class="<%= dom_id(channel, :sidebar) %>">
-  <%= link_to channel, class: "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white" do %>
+  <%= link_to channel, class: "group flex gap-x-3 rounded-lg p-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" do %>
     <svg
-      class="size-6 shrink-0 text-indigo-200 group-hover:text-white"
+      class="size-5 shrink-0 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
       fill="none"
       viewBox="0 0 24 24"
       stroke-width="1.5"

@@ -1,26 +1,53 @@
-<table class="w-full border-collapse">
-  <thead>
-    <tr class="bg-gray-100">
-      <th class="border px-4 py-2">Session</th>
-      <th class="border px-4 py-2">Created At</th>
-      <th class="border px-4 py-2">Updated At</th>
-      <th class="border px-4 py-2">Running</th>
-      <th class="border px-4 py-2">Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @sessions.each_with_index do |session, index| %>
-      <tr class="hover:bg-gray-50">
-        <td class="border px-4 py-2">Session <%= index + 1 %></td>
-        <td class="border px-4 py-2"><%= session.created_at.strftime("%Y-%m-%d %H:%M") if session.created_at %></td>
-        <td class="border px-4 py-2"><%= session.updated_at.strftime("%Y-%m-%d %H:%M") if session.updated_at %></td>
-        <td class="border px-4 py-2"><%= session.running? ? "Yes" : "No" %></td>
-        <td class="border px-4 py-2"><%= link_to "View", session, class: yass(btn: :gray, add: 'w-full') %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="flex flex-col h-full">
+  <div class="w-full overflow-auto flex-grow">
+    <table class="w-full border-collapse rounded-lg overflow-hidden shadow-lg 
+                  bg-white dark:bg-gray-900 shadow-gray-200/50 dark:shadow-gray-800/20
+                  overflow-y-auto">
+      <thead>
+        <tr class="sticky top-0 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+          <th class="px-6 py-3 text-left text-sm font-semibold border-b 
+                     border-gray-200 dark:border-gray-700">Session</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold border-b 
+                     border-gray-200 dark:border-gray-700">Created At</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold border-b 
+                     border-gray-200 dark:border-gray-700">Updated At</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold border-b 
+                     border-gray-200 dark:border-gray-700">Running</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold border-b 
+                     border-gray-200 dark:border-gray-700">Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sessions.reverse.each_with_index do |session, index| %>
+          <% index = @sessions.length - index %>
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 
+                     transition-colors duration-150 text-gray-900 dark:text-gray-100">
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 
+                       text-sm">Session <%= index %></td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 
+                       text-sm">
+              <%= session.created_at&.strftime("%Y-%m-%d %H:%M") %>
+            </td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 
+                       text-sm">
+              <%= session.updated_at&.strftime("%Y-%m-%d %H:%M") %>
+            </td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 
+                       text-sm">
+              <span class="<%= session.running? ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' %>">
+                <%= session.running? ? "Yes" : "No" %>
+              </span>
+            </td>
+            <td class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 
+                       text-sm">
+              <%= link_to "View", session, class: yass(btn: :gray, add: 'w-full') %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<div class="mt-4">
-  <%= button_to "Start Session", goose_sessions_path(@goose), class: yass(btn: :blue) %>
+  <%= button_to "Start Session", goose_sessions_path(@goose), 
+        class: yass(btn: :blue, add: 'w-full') %>
 </div>

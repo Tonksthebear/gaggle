@@ -23,7 +23,7 @@ module Gaggle
 
     def markdown_content
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-      markdown.render(content.gsub('\r\n', "\r\n").gsub('\n', "\n"))
+      markdown.render(content)
     end
 
     private
@@ -35,7 +35,6 @@ module Gaggle
       when Gaggle::Goose
         Array.wrap(messageable)
       end
-
 
       # Find @mentions in the message content.
       # This regex captures sequences starting with '@' followed by word characters.

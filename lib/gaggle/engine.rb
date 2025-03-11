@@ -8,6 +8,9 @@ module Gaggle
         Gaggle::ApplicationController.helper(Classy::Yaml::Helpers)
         config.engine_files << Engine.root.join("config/utility_classes.yml")
       end
+      MCP::Rails.configure do |config|
+        config.register_engine(Gaggle::Engine, env_vars: [ "GOOSE_USER_ID" ])
+      end
     end
 
     initializer "gaggle.development_check" do

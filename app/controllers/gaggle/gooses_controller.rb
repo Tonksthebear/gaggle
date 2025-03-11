@@ -2,6 +2,10 @@ module Gaggle
   class GoosesController < ApplicationController
     before_action :set_goose
 
+    def index
+      @gooses = Goose.all
+    end
+
     def show; end
 
     def new; end

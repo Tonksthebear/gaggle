@@ -2,19 +2,26 @@ module Gaggle
   class Channels::MessagesController < Gaggle::ChannelsController
     skip_before_action :verify_authenticity_token
 
-    def create
-      @message = @channel.messages.new(message_params)
-      if @message.save
-        redirect_to @channel, notice: "Message sent."
-      else
-        render :new, notice: "Message was not sent."
+    permitted_params_for :create do
+      param :message, required: true do
+        param :content, type: :string, example: "Message Content", required: true
       end
     end
 
-    private
-
-    def message_params
-      params.require(:message).permit(:content, :goose_id)
+    def create
+      @message = @channel.messages.new(resource_params)
+      @message.goose = @goose_user
+      if @message.save
+        respond_to do |format|
+          format.html { redirect_to @channel, notice: "Message sent." }
+          format.json { render json: @message, status: :created, location: @message }
+        end
+      else
+        respond_to do |format|
+          format.html { render :new, notice: "Message was not sent." }
+          format.json { render json: @message.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end
 end

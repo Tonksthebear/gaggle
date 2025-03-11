@@ -16,6 +16,7 @@ gem "classy-yaml"
 gem "jbuilder"
 gem "solid_cable"  # Compatible with Rails 7.2+
 gem "strings-ansi"
+gem "mcp-rails", git: "https://github.com/Tonksthebear/mcp-rails"
 
 group :development do
   gem "web-console"
