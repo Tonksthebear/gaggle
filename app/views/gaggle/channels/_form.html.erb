@@ -3,10 +3,10 @@
 <%= form_with model: channel, class: "space-y-6 max-w-2xl mx-auto" do |form| %>
   <% if @channel.errors.any? %>
     <div id="error_explanation" 
-         class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800/40 
+         class="bg-red-50 dark:bg-red-900/40 border border-red-200 dark:border-red-800/50 
                 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl mb-4 
-                ring-1 ring-red-100 dark:ring-red-900/20">
-      <h2 class="font-semibold text-sm"><%= pluralize(@channel.errors.count, "error") %> prevented saving:</h2>
+                shadow-sm shadow-red-200/50 dark:shadow-red-900/20 transition-all duration-200">
+      <h2 class="font-semibold text-sm tracking-wide"><%= pluralize(@channel.errors.count, "error") %> prevented saving:</h2>
       <ul class="list-disc pl-5 mt-2 text-sm">
         <% @channel.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
@@ -15,28 +15,35 @@
     </div>
   <% end %>
 
+  <!-- Name Field -->
   <div class="space-y-2">
     <%= form.label :name, 
           class: "block text-sm font-medium text-gray-900 dark:text-gray-100" %>
     <%= form.text_field :name, 
           required: true,
           placeholder: "Enter channel name",
-          class: "mt-1 block w-full px-3.5 py-2.5 bg-white dark:bg-gray-800/50 
+          class: "block w-full px-4 py-2.5 bg-white dark:bg-gray-800/50 
                  border border-gray-300 dark:border-gray-700/50 rounded-lg 
                  shadow-sm focus:outline-none focus:ring-2 
                  focus:ring-indigo-500 dark:focus:ring-indigo-400 
-                 focus:border-indigo-500 dark:focus:border-indigo-400 
-                 text-gray-900 dark:text-gray-100 
+                 focus:border-transparent text-gray-900 dark:text-gray-100 
                  placeholder:text-gray-400 dark:placeholder:text-gray-500 
+                 hover:border-indigo-400 dark:hover:border-indigo-600 
                  transition-all duration-200" %>
   </div>
 
+  <!-- Gaggle Members Assignment -->
   <div class="space-y-3">
-    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100">Assign Gaggle Members</h3>
-    <div class="grid gap-2.5 sm:grid-cols-2">
+    <h3 class="text-sm font-medium text-gray-900 dark:text-gray-100 uppercase tracking-wide">
+      Assign Gaggle Members
+    </h3>
+    <div class="grid gap-2 sm:grid-cols-2">
       <%= form.collection_check_boxes :goose_ids, Gaggle::Goose.all, :id, :name do |b| %>
-        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800/50 
-                     transition-colors duration-150 cursor-pointer">
+        <label class="flex items-center gap-x-3 p-2 rounded-lg 
+                     bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/50 
+                     hover:bg-indigo-50 dark:hover:bg-indigo-900/50 
+                     hover:border-indigo-300 dark:hover:border-indigo-700/50 
+                     transition-all duration-200 cursor-pointer shadow-sm">
           <%= b.check_box class: "h-4 w-4 text-indigo-600 dark:text-indigo-400 
                                 border-gray-300 dark:border-gray-600 
                                 rounded focus:ring-indigo-500 dark:focus:ring-indigo-400 
@@ -47,16 +54,17 @@
     </div>
   </div>
 
+  <!-- Submit Button -->
   <div class="pt-2">
-    <%= form.submit class: "w-full flex justify-center py-2.5 px-4 
+    <%= form.submit class: "w-full flex justify-center py-2.5 px-6 
                            border border-transparent rounded-lg 
-                           shadow-sm text-sm font-medium text-white 
+                           shadow-md text-sm font-medium text-white 
                            bg-indigo-600 hover:bg-indigo-700 
                            dark:bg-indigo-500 dark:hover:bg-indigo-600 
                            focus:outline-none focus:ring-2 
                            focus:ring-offset-2 dark:focus:ring-offset-gray-900 
                            focus:ring-indigo-500 disabled:opacity-50 
                            disabled:cursor-not-allowed 
-                           transition-all duration-200 cursor-pointer" %>
+                           hover:shadow-lg transition-all duration-300 cursor-pointer" %>
   </div>
 <% end %>

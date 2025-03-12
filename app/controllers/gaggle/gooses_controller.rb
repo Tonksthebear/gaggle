@@ -3,7 +3,7 @@ module Gaggle
     before_action :set_goose
 
     def index
-      @gooses = Goose.all
+      @gooses = Goose.where.not(id: Current.goose_user&.id)
     end
 
     def show; end

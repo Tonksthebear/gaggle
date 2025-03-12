@@ -5,7 +5,7 @@ module Gaggle
     self.table_name = "gaggle_messages"
 
     belongs_to :messageable, polymorphic: true
-    belongs_to :goose, class_name: "Gaggle::Goose", optional: true
+    belongs_to :goose, class_name: "Gaggle::Goose", optional: true, default: -> { Current.goose_user }
 
     has_many :notifications, class_name: "Gaggle::Notification", dependent: :destroy
 
@@ -31,7 +31,7 @@ module Gaggle
     def generate_notifications
       goose_to_notify = case messageable
       when Gaggle::Channel
-        messageable.gooses.where.not(id: goose_id)
+        messageable.gooses.where.not(id: goose_id).to_a
       when Gaggle::Goose
         Array.wrap(messageable)
       end

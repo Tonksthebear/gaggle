@@ -8,13 +8,11 @@
     <%= javascript_importmap_tags 'gaggle/application' %>
     <%= stylesheet_link_tag "gaggle/tailwind", "data-turbo-track": "reload" %>
   </head>
-  <body class="h-full bg-white dark:bg-gray-900">
+  <body class="h-full bg-white dark:bg-gray-900 max-h-screen">
     <%= turbo_stream_from 'gaggle'%>
     <div class="flex h-full">
       <%= render 'sidebar', channels: @channels do %>
-      <main class="flex-1 w-full h-full max-h-screen">
         <%= yield %>
-      </main>
       <% end %>
     </div>
   </body>

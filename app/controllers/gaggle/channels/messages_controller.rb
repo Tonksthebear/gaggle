@@ -10,7 +10,6 @@ module Gaggle
 
     def create
       @message = @channel.messages.new(resource_params)
-      @message.goose = @goose_user
       if @message.save
         respond_to do |format|
           format.html { redirect_to @channel, notice: "Message sent." }

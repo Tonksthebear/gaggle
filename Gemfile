@@ -14,7 +14,6 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "classy-yaml"
 gem "jbuilder"
-gem "solid_cable"  # Compatible with Rails 7.2+
 gem "strings-ansi"
 gem "mcp-rails", git: "https://github.com/Tonksthebear/mcp-rails"
 

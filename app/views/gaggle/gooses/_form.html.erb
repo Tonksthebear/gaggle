@@ -34,7 +34,9 @@
                    appearance-none cursor-pointer 
                    hover:border-gray-400 dark:hover:border-gray-600 
                    transition-all duration-200",
-            onchange: "document.getElementById('#{f.field_id(:prompt)}').value = this.options[this.selectedIndex].value" %>
+            onchange: "const target = document.getElementById('#{f.field_id(:prompt)}'); 
+                target.value = this.options[this.selectedIndex].value; 
+                target.dispatchEvent(new Event('input'));" %>
     </div>
 
     <!-- Prompt Textarea -->

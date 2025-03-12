@@ -14,4 +14,43 @@ if ActiveSupport::TestCase.respond_to?(:fixture_paths=)
   ActiveSupport::TestCase.fixtures :all
 end
 
-Rails.application.load_tasks
+
+class ActionDispatch::IntegrationTest
+  # Helper to access the engine's mounted namespace
+  def gaggle
+    Gaggle::Engine.routes.url_helpers
+  end
+
+  # Define a method to wrap tests with engine routes
+  def with_engine_routes(&block)
+    original_routes = nil
+    begin
+      # Set routes before the test runs, if controller is available
+      if @controller && @controller.view_context
+        original_routes = @controller.view_context.routes
+        @controller.view_context.instance_variable_set(:@_routes, Gaggle::Engine.routes)
+      end
+      block.call
+    ensure
+      # Restore routes after the test, if they were changed
+      if @controller && @controller.view_context && original_routes
+        @controller.view_context.instance_variable_set(:@_routes, original_routes)
+      end
+    end
+  end
+
+  # Override the run method to apply engine routes to all tests
+  def run(*args)
+    with_engine_routes { super(*args) }
+  end
+end
+
+
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  self.shared_connection = nil
+
+  def self.connection
+    shared_connection || retrieve_connection
+  end
+end

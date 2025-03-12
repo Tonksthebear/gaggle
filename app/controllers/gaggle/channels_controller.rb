@@ -20,7 +20,9 @@ module Gaggle
     tool_description_for :index, "View all messages in a channel"
     def index; end
 
-    def show; end
+    def show
+      @notification = Current.goose_user&.notifications&.unread&.for_messageable(@channel)&.first
+    end
 
     def new; end
 
@@ -64,7 +66,7 @@ module Gaggle
       @channel.destroy
       respond_to do |format|
         format.html { redirect_to root_url, notice: "Channel was successfully destroyed." }
-        format.json { head :no_content }
+        format.json { render json: "#{@channel.name} was successfully destroyed.", status: :ok }
       end
     end
 
