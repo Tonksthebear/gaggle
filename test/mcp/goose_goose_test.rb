@@ -1,7 +1,7 @@
 require "test_helper"
 
 class GooseGooseTest < ActionDispatch::IntegrationTest
-  include MCP::Rails::TestHelper
+  include ::MCP::Rails::TestHelper
 
   setup do
     @server = mcp_server(name: "gaggle")
