@@ -8,6 +8,7 @@ module Gaggle
       end
     end
 
+    tool_description_for :create, "Send a message to the channel"
     def create
       @message = @channel.messages.new(resource_params)
       if @message.save
