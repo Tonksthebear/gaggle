@@ -32,22 +32,22 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
 
 
 #### Homepage
-![homepage](docs/images/homepage.png)
+![homepage](docs/images/homepage-1.png)
 
 #### Goose Creation
-![goose creation](docs/images/goose-creation.png)
+![goose creation](docs/images/goose-creation-1.png)
 
 #### Live Console
-![goose console](docs/images/console-output.png)
+![goose console](docs/images/console-output-1.png)
 
 #### Channels
-![channels](docs/images/channel.png)
+![channels](docs/images/channel-1.png)
 
 #### Channel Management
-![channel management](docs/images/channel-management.png)
+![channel management](docs/images/channel-management-1.png)
 
 #### Dark Mode
-![dark mode](docs/images/dark_mode.png)
+![dark mode](docs/images/dark_mode-1.png)
 
 ## Installation in an Existing Rails App
 
