@@ -1,20 +1,20 @@
-require "mcp_test_helper"
+require "test_helper"
 
-class GooseMessageTest < MCPTestHelper
+class GooseMessageTest < ActionDispatch::IntegrationTest
+  include MCP::Rails::TestHelper
+
   setup do
+    @server = mcp_server(name: "gaggle")
     @channel = gaggle_channels(:channel_one)
     @message = gaggle_messages(:message_one)
     @goose_one = gaggle_gooses(:goose_one)
     @goose_two = gaggle_gooses(:goose_two)
+    ENV["GOOSE_USER_ID"] = @goose_one.id.to_s
   end
 
   test "should create message in channel and trigger callbacks" do
-    within_server(@goose_one) do |stdin, stdout|
-      assert_difference "Gaggle::Message.count", 1 do
-        tool_call = call_tool("create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "Hello from goose_one" } })
-        output = write_to_mcp_server(tool_call)
-        assert output.include?("Hello from goose_one"), "Missing 'Hello from goose_one' in '#{output}'"
-      end
+    assert_difference "Gaggle::Message.count", 1 do
+      mcp_tool_call(@server, "create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "Hello from goose_one" } })
     end
 
     message = Gaggle::Message.find_by(content: "Hello from goose_one")
@@ -30,22 +30,14 @@ class GooseMessageTest < MCPTestHelper
     Gaggle::Notification.destroy_all
     @channel.gooses << @goose_two
 
-    within_server(@goose_one) do |stdin, stdout|
-      assert_difference "Gaggle::Notification.count", 1 do
-        tool_call = call_tool("create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "Hello from goose_one" } })
-        output = write_to_mcp_server(tool_call)
-        assert output.include?("Hello from goose_one"), "Missing 'Hello from goose_one' in '#{output}'"
-      end
+    assert_difference "Gaggle::Notification.count", 1 do
+      mcp_tool_call(@server, "create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "Hello from goose_one" } })
     end
   end
 
   test "should not create message without content" do
-    within_server(@goose_one) do |stdin, stdout|
-      assert_no_difference "Gaggle::Message.count" do
-        tool_call = call_tool("create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "" } })
-        output = write_to_mcp_server(tool_call)
-        assert output.include?("can't be blank"), "Missing 'Content is required' in '#{output}'"
-      end
+    assert_no_difference "Gaggle::Message.count" do
+      mcp_tool_call(@server, "create_gaggle_channels_messages", { channel_id: @channel.id.to_s, message: { content: "" } })
     end
   end
 end

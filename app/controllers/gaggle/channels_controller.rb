@@ -17,9 +17,10 @@ module Gaggle
     end
 
 
-    tool_description_for :index, "View all messages in a channel"
+    tool_description_for :index, "View all channels and their ids"
     def index; end
 
+    tool_description_for :show, "View all messages in a channel"
     def show
       @notification = Current.goose_user&.notifications&.unread&.for_messageable(@channel)&.first
     end
@@ -48,7 +49,7 @@ module Gaggle
       if @channel.update(resource_params)
         respond_to do |format|
           format.html { redirect_to @channel, notice: "Channel was successfully updated." }
-          format.json { render json: @channel, status: :ok, location: @channel }
+          format.json { render json: { name: @channel.name, goose_ids: @channel.goose_ids }, status: :ok }
         end
 
         Turbo::StreamsChannel.broadcast_update_to "application",

@@ -44,13 +44,3 @@ class ActionDispatch::IntegrationTest
     with_engine_routes { super(*args) }
   end
 end
-
-
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  self.shared_connection = nil
-
-  def self.connection
-    shared_connection || retrieve_connection
-  end
-end

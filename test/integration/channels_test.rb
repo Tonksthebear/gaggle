@@ -8,11 +8,9 @@ class ChannelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show channel" do
-    with_engine_routes do
-      get gaggle.channel_path(@channel)
-      assert_response :success
-      assert_select "h1", @channel.name
-    end
+    get gaggle.channel_path(@channel)
+    assert_response :success
+    assert_select "h1", @channel.name
   end
 
   test "should get new" do

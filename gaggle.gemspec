@@ -12,13 +12,12 @@ Gem::Specification.new do |spec|
   spec.add_dependency "classy-yaml"
   spec.add_dependency "strings-ansi"
   spec.add_dependency "redcarpet"
-  spec.add_dependency "mcp-rails", ">= 0.2"
+  spec.add_dependency "mcp-rails", ">= 0.4"
   spec.add_development_dependency "appraisal"
   spec.add_development_dependency "tailwindcss-ruby"
   spec.add_development_dependency "importmap-rails"
   spec.add_development_dependency "stimulus-rails"
   spec.add_development_dependency "minitest-around"
-  spec.add_development_dependency "capybara-rails"
 
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
