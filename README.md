@@ -68,7 +68,6 @@ Then execute:
 bundle install
 ```
 
-## Usage
 
 Mount the engine in your `config/routes.rb` file:
 
@@ -76,6 +75,11 @@ Mount the engine in your `config/routes.rb` file:
 Rails.application.routes.draw do
   mount Gaggle::Engine => "/gaggle"
 end
+```
+
+Generate the MCP server:
+```shell
+bin/rails mcp:rails:generate_server
 ```
 
 It is recommended to give Gaggle its own database. An example schema is:
