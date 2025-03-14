@@ -8,6 +8,7 @@ module Gaggle
 
     validates :name, presence: true
 
+    before_validation :assign_goose_user, if: -> { Current.goose_user }
     after_create_commit :broadcast_create
     after_update_commit :broadcast_update
     after_destroy_commit :broadcast_destroy
@@ -33,6 +34,12 @@ module Gaggle
 
     def broadcast_destroy
       broadcast_remove_to "gaggle", targets: ".#{dom_id(self, :sidebar)}"
+    end
+
+    private
+
+    def assign_goose_user
+      gooses << Current.goose_user
     end
   end
 end

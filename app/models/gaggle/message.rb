@@ -5,7 +5,7 @@ module Gaggle
     self.table_name = "gaggle_messages"
 
     belongs_to :messageable, polymorphic: true
-    belongs_to :goose, class_name: "Gaggle::Goose", optional: true
+    belongs_to :goose, class_name: "Gaggle::Goose", optional: true, default: -> { Current.goose_user }
 
     has_many :notifications, class_name: "Gaggle::Notification", dependent: :destroy
 
@@ -23,7 +23,7 @@ module Gaggle
 
     def markdown_content
       markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
-      markdown.render(content.gsub('\r\n', "\r\n").gsub('\n', "\n"))
+      markdown.render(content)
     end
 
     private
@@ -31,11 +31,10 @@ module Gaggle
     def generate_notifications
       goose_to_notify = case messageable
       when Gaggle::Channel
-        messageable.gooses.where.not(id: goose_id)
+        messageable.gooses.where.not(id: goose_id).to_a
       when Gaggle::Goose
         Array.wrap(messageable)
       end
-
 
       # Find @mentions in the message content.
       # This regex captures sequences starting with '@' followed by word characters.

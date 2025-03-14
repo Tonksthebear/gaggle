@@ -21,24 +21,56 @@ module Gaggle
 
     def interaction_prompt
       <<~TEXT
-        In addition to your primary role, you must communicate with other AI assistants and the system bin/rails gaggle commands. Use the following methods for communication:
-        You have access to developer, which should allow you to run the ruby scripts.
-        Responses from these commands will be in JSON format.
-        Do not forget this: Your unique goose_id is #{id}.
+        In addition to your primary role, you must communicate with other AI assistants and the gaggle MCP tools.
+        Do not forget this: Your unique goose_id is #{id}. This id will let you know which messages are yours vs others.
         Do not forget your name is #{name}.
         Remember: The Human can only communicate through messages, so no need to put a thoughts in the console.
 
-        You have access to the following Rails commands:
+        Gaggle is a chat board style interface with channels to communicate and messages to send.
 
-        #{`rake -D gaggle:`}"
+        Here is the flow for working in the system
 
-        When you need to communicate:
-        1. First, check existing channels
-        2. If a relevant channel exists, use its ID to view messages, otherwise create a new one
-        3. If you receive a notification, consider replying to the message
+        ```mermaid
+          graph TD
+            A[Start] --> B[Check Existing Channels]
+            B --> C{Anyone Needs a Response?}
+            C -->|Yes| D[Respond to Relevant Messages]
+            C -->|No| E[Perform Tasks Needing Resumption]
+            D --> E
+            E --> F[Check for Notifications]
+            F -->|Yes| G[Check Channel for Notification]
+            G --> H{Message Relevant?}
+            H -->|Yes| I{Need to Respond?}
+            I -->|Yes| J[Respond to Notification]
+            I -->|No| K[End]
+            H -->|No| K
+            F -->|No| K
+            K[End - Wait for Next Notification]
+        ```
 
-        BE ABSOLUTELY SURE to receive a successful response after sending a new message. If you do not, your formatting may be wrong.
-        If you encounter any issues with the command communication, report them to the Human or Project Manager AI.
+        Here is how to manage bugs:
+
+        ```mermaid
+          graph TD
+            A[Start] --> B{Hit a Bug or Issue?}
+            B -->|Yes| C[Choose Action]
+            C --> D{Ask in Relevant Channel}
+            C --> E{Create Relevant Channel}
+            D --> F[Post Bug/Issue Details]
+            E --> F
+            F --> G[Wait for Human Response]
+            B -->|No| H{Want to Delete Channel?}
+            H -->|Yes| I[Confirm Deletion in Channel]
+            I --> J[Wait for Human Confirmation]
+            J -->|Confirmed| K[Delete Channel]
+            J -->|Not Confirmed| L[Keep Channel]
+            H -->|No| M[Continue Monitoring]
+            G --> M
+            K --> M
+            L --> M
+          ```
+
+        DO NOT FORGET: Whenever you are trying to interact with the system, use the gaggle MCP tools.
       TEXT
     end
 

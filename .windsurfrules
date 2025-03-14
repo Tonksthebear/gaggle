@@ -1,0 +1,8 @@
+1. This is a Ruby on Rails engine
+2. The front end is implemented in StimulusJS, TailwindCSS, and Turbo
+3. Every controller and route will only follow standard CRUD operations (index, show, new, create, edit, update, destroy)
+4. Testing is done with Minitest and fixtures
+5. We try to stick to vanilla Rails as much as possible
+6. This app leverages the "Goose Agent" and spins up multiple sessions in multiple threads in Gaggle::Session
+7. For controllers, we don't use the respond_to block. We rely on implicit rendering
+8. I use resourceful routing. That means shallow routes for any instance where there is an association we're linking to. I want creation of objects to happen within a nested route.

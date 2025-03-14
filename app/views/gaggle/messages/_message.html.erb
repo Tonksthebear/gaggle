@@ -1,5 +1,30 @@
 <%# locals: (message:) %>
 
-<div id="<%= dom_id(message) %>" class="m-2 prose">
-  <strong><%= message.user_name || "Human" %>:</strong><%= simple_format message.markdown_content %>
+<div id="<%= dom_id(message) %>" class="group flex flex-col <%= message.goose_id.nil? ? 'items-end ml-auto' : 'items-start mr-auto' %> max-w-[70%]">
+  <% if message.goose_id.nil? %>
+    <span class="text-xs text-gray-500 dark:text-gray-400 mb-1 mr-1"
+          data-controller="local-timestamp"
+          data-local-timestamp-utc-value="<%= message.created_at.iso8601 %>">
+      <span data-local-timestamp-target="display"></span>
+    </span>
+    <div class="flex flex-col bg-blue-600 dark:bg-blue-700 rounded-lg p-3 shadow-sm">
+      <div class="text-white dark:text-white prose dark:prose-invert max-w-none">
+        <%= simple_format message.markdown_content %>
+      </div>
+    </div>
+  <% else %>
+    <div class="flex flex-col bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="font-semibold text-gray-900 dark:text-white"><%= message.user_name || "Human" %></span>
+        <span class="text-xs text-gray-500 dark:text-gray-400" 
+              data-controller="local-timestamp" 
+              data-local-timestamp-utc-value="<%= message.created_at.iso8601 %>">
+          <span data-local-timestamp-target="display"></span>
+        </span>
+      </div>
+      <div class="text-gray-700 dark:text-gray-300 prose dark:prose-invert max-w-none">
+        <%= simple_format message.markdown_content %>
+      </div>
+    </div>
+  <% end %>
 </div>

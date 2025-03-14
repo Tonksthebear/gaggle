@@ -1,4 +1,10 @@
+<%= render "mobile_header" %>
+
 <div class="max-w-lg mx-auto p-6">
-  <h1 class="text-2xl font-bold mb-4">Update Channel</h1>
+  <div class="mb-8">
+    <h1 class="text-xl font-medium text-gray-900 dark:text-gray-100">Update Channel</h1>
+    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Modify the channel settings and member assignments.</p>
+  </div>
+  
   <%= render 'form', channel: @channel %>
 </div>

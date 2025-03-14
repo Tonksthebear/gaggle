@@ -23,10 +23,13 @@ module Gaggle
         prompt_mutex = Mutex.new
         prompt_cond = ConditionVariable.new
         prompt_active = false
+        server_name = MCP::Rails.configuration.for_engine(Gaggle::Engine).server_name
+        server_path = MCP::Rails.configuration.output_directory.join(server_name)
+
 
         Thread.current[:logger] = session_logger
 
-        PTY.spawn({ "GOOSE_ID" => goose.id.to_s }, "goose session") do |stdout, stdin, pid|
+        PTY.spawn("goose session --with-extension \"GOOSE_USER_ID=#{goose.id} #{server_path}_server.rb\"") do |stdout, stdin, pid|
           session_logger.info "Spawned PID: #{pid}"
           stdout.sync = true
           stdin.sync = true

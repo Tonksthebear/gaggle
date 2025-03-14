@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html class="h-full bg-white">
+<html class="h-full bg-white dark:bg-gray-900">
   <head>
     <title>Gaggle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_importmap_tags 'gaggle/application' %>
     <%= stylesheet_link_tag "gaggle/tailwind", "data-turbo-track": "reload" %>
   </head>
-    <html class="h-full bg-white">
-  <body class="h-full">
+  <body class="h-full bg-white dark:bg-gray-900 max-h-screen">
     <%= turbo_stream_from 'gaggle'%>
-    <%= render layout: 'sidebar', locals: { channels: @channels } do %>
-      <%= yield %>
-    <% end %>
+    <div class="flex h-full">
+      <%= render 'sidebar', channels: @channels do %>
+        <%= yield %>
+      <% end %>
+    </div>
   </body>
 </html>

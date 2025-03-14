@@ -46,6 +46,9 @@ Gaggle is a Rails engine designed for development use that orchestrates multiple
 #### Channel Management
 ![channel management](docs/images/channel-management.png)
 
+#### Dark Mode
+![dark mode](docs/images/dark_mode.png)
+
 ## Installation in an Existing Rails App
 
 Install and configure [Goose CLI](https://block.github.io/goose/docs/getting-started/installation/)
@@ -92,11 +95,6 @@ Gaggle uses it's own database schema, so you will need to run the migrations:
 ```shell
 bin/rails db:migrate:gaggle
 ```
-
-### Warning
-It is also HIGHLY recommended to not use the :async adapter for ActionCable. This comes
-preconfigured for rails running in development mode, but it requires all code that sends
-messages over cable to be in the same thread as the server. If you want to see messages coming through from your Gaggle live, you'll need a different adapter. The easiest one to set up is [SolidCable](https://github.com/rails/solid_cable)
 
 Now, whenever your application is running, you can access the Gaggle dashboard at `http://your_local_server/gaggle`.
 

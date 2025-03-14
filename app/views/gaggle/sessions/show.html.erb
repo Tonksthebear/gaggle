@@ -1,29 +1,76 @@
 <%= turbo_stream_from @session %>
 
-<div class="flex items-center space-x-2">
-  <%= link_to "Back", goose_sessions_path(@session.goose), class: yass(btn: :gray) %>
-  <%= button_to "Stop Session", @session, class: yass(btn: :danger), method: :delete, data: { turbo_confirm: "Are you sure you want to stop this session?" } %>
-</div>
-
-<div class="container mx-auto p-6">
-  <h1 class="text-2xl font-bold mb-4">Executable Console</h1>
-  <!-- Output display for the running executable -->
-
-  <div id="console-output" class="bg-black text-green-500 p-4 rounded mb-4 h-80 overflow-y-auto flex flex-col-reverse">
-    <pre><code id="<%= dom_id(@session, :code) %>"><%= Strings::ANSI.sanitize(File.read(@session.log_file)) rescue "No output available..." %></code></pre>
+<div class="flex flex-col max-h-full flex-grow bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
+  <!-- Header Section -->
+  <div class="bg-white dark:bg-gray-900 shadow-md shadow-gray-200/50 dark:shadow-gray-800/20 
+                 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+    <%= render "mobile_header" %>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      Executable Console
+    </h1>
+    <div class="flex items-center space-x-3">
+      <%= link_to "Back", goose_sessions_path(@session.goose), 
+            class: yass(btn: :gray) %>
+      <%= button_to "Stop Session", @session, 
+            class: yass(btn: :danger), 
+            method: :delete, 
+            data: { turbo_confirm: "Are you sure you want to stop this session?" } %>
+    </div>
   </div>
 
-  <% if @session.running? %>
-    <div>
-      <%= form_with model: @session do |f| %>
-        <div class="flex">
-          <%= f.text_field :input, placeholder: "Enter command here...", class: "flex-grow p-2 border rounded" %>
-          <%= f.submit "Send", class: "ml-2 px-4 py-2 bg-blue-600 text-white rounded" %>
+  <!-- Console Output -->
+  <section id="console-output" 
+           class="flex-1 bg-gray-900 dark:bg-gray-950 text-green-400 dark:text-green-300 
+                  p-6 rounded-lg mb-6 font-mono text-sm border border-gray-800 dark:border-gray-700/50 
+                  shadow-inner overflow-y-auto flex flex-col-reverse">
+    <pre><code id="<%= dom_id(@session, :code) %>">
+        <%= Strings::ANSI.sanitize(File.read(@session.log_file)) rescue "No output available..." %>
+      </code></pre>
+  </section>
+
+  <!-- Input Section -->
+  <div class="bg-white dark:bg-gray-900 rounded-lg p-4 shadow-md shadow-gray-200/50 dark:shadow-gray-800/20">
+    <% if @session.running? %>
+      <%= form_with model: @session, 
+            class: "relative" do |form| %>
+        <div class="relative flex items-center">
+          <%= form.text_area :content,
+                rows: 1,
+                autofocus: true,
+                placeholder: "Type your message...",
+                class: "w-full px-4 py-2.5 pr-20 rounded-lg border border-gray-300 dark:border-gray-700/50 
+                   bg-white dark:bg-gray-800/70 text-gray-900 dark:text-gray-100 
+                   placeholder-gray-400 dark:placeholder-gray-500 
+                   focus:outline-none focus:ring-2 focus:ring-indigo-500 
+                   dark:focus:ring-indigo-400 focus:border-transparent 
+                   resize-none min-h-[2.5rem] max-h-32 transition-all duration-200 
+                   scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 
+                   scrollbar-track-transparent hover:border-gray-400 dark:hover:border-gray-600 resize-y",
+                   data: {
+                    controller: "text-area-auto-expand chat-field-form",
+                    text_area_auto_expand_max_rows_value: 5,
+                    action: "keydown.enter->chat-field-form#submitForm:prevent"
+                   } %>
+          <%= form.label :content, 
+                class: "absolute right-2 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 
+                        dark:bg-indigo-500 dark:hover:bg-indigo-600 
+                        text-white text-sm font-medium rounded-full 
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500 
+                        dark:focus:ring-indigo-400 focus:ring-offset-2 
+                        dark:focus:ring-offset-gray-900 
+                        disabled:opacity-50 disabled:cursor-not-allowed 
+                        transition-all duration-200" do %>
+            <% form.submit '', class: 'hidden' %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+            </svg>
+          <% end %>
         </div>
       <% end %>
-    </div>
-  <% else %>
-    Session is no longer running. Please start it again.
-  <% end %>
+    <% else %>
+      <div class="text-gray-600 dark:text-gray-400 text-sm italic py-2">
+        Session is no longer running. Please start a new session.
+      </div>
+    <% end %>
+  </div>
 </div>
-

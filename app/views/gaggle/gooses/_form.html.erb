@@ -1,21 +1,65 @@
-<div class="max-w-2xl mx-auto p-6 bg-white shadow rounded-lg">
-  <%= form_with model: @goose, local: true, class: "space-y-4" do |f| %>
-    <div>
-      <%= f.label :name, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_field :name, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+<div class="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-lg 
+            shadow-gray-200/50 dark:shadow-gray-800/20 transition-all duration-300">
+  <%= form_with model: @goose, local: true, class: "space-y-6" do |f| %>
+    <!-- Name Field -->
+    <div class="space-y-2">
+      <%= f.label :name, 
+            class: "block text-sm font-medium text-gray-900 dark:text-gray-100" %>
+      <%= f.text_field :name, 
+            placeholder: "Enter name",
+            class: "block w-full px-4 py-2.5 bg-white dark:bg-gray-800/50 
+                   border border-gray-300 dark:border-gray-700/50 
+                   rounded-lg shadow-sm focus:outline-none focus:ring-2 
+                   focus:ring-indigo-500 dark:focus:ring-indigo-400 
+                   focus:border-transparent text-gray-900 dark:text-gray-100 
+                   placeholder:text-gray-400 dark:placeholder:text-gray-500 
+                   hover:border-gray-400 dark:hover:border-gray-600 
+                   transition-all duration-200" %>
     </div>
-    <%= select_tag :preset_prompts,
-                   options_for_select(Gaggle::Goose.personalities.map { |personality| [personality[:name], personality[:prompt]] }),
-                   prompt: 'Choose a preset prompt',
-                   class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
-                   onchange: "document.getElementById('#{f.field_id(:prompt)}').value = this.options[this.selectedIndex].value"
-                    %>
-    <div>
-      <%= f.label :prompt, class: "block text-sm font-medium text-gray-700" %>
-      <%= f.text_area :prompt, rows: 4, class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+
+    <!-- Preset Prompts Dropdown -->
+    <div class="space-y-2">
+      <label for="preset_prompts" 
+             class="block text-sm font-medium text-gray-900 dark:text-gray-100">
+        Preset Prompts
+      </label>
+      <%= select_tag :preset_prompts,
+            options_for_select(Gaggle::Goose.personalities.map { |personality| [personality[:name], personality[:prompt]] }),
+            prompt: 'Choose a preset prompt',
+            class: "block w-full px-4 py-2.5 bg-white dark:bg-gray-800/50 
+                   border border-gray-300 dark:border-gray-700/50 
+                   rounded-lg shadow-sm focus:outline-none focus:ring-2 
+                   focus:ring-indigo-500 dark:focus:ring-indigo-400 
+                   focus:border-transparent text-gray-900 dark:text-gray-100 
+                   appearance-none cursor-pointer 
+                   hover:border-gray-400 dark:hover:border-gray-600 
+                   transition-all duration-200",
+            onchange: "const target = document.getElementById('#{f.field_id(:prompt)}'); 
+                target.value = this.options[this.selectedIndex].value; 
+                target.dispatchEvent(new Event('input'));" %>
     </div>
+
+    <!-- Prompt Textarea -->
+    <div class="space-y-2">
+      <%= f.label :prompt, 
+            class: "block text-sm font-medium text-gray-900 dark:text-gray-100" %>
+      <%= f.text_area :prompt, 
+            rows: 10,
+            placeholder: "Enter your prompt here...",
+            class: "block w-full px-4 py-2.5 bg-white dark:bg-gray-800/50 
+                   border border-gray-300 dark:border-gray-700/50 
+                   rounded-lg shadow-sm focus:outline-none focus:ring-2 
+                   focus:ring-indigo-500 dark:focus:ring-indigo-400 
+                   focus:border-transparent text-gray-900 dark:text-gray-100 
+                   placeholder:text-gray-400 dark:placeholder:text-gray-500 
+                   resize-y hover:border-gray-400 dark:hover:border-gray-600",
+            data: { controller: "text-area-auto-expand" } %>
+    </div>
+
+    <!-- Submit Button -->
     <div>
-      <%= f.submit "Save", class: yass(btn: :blue) %>
+      <%= f.submit "Save",
+            class: yass(btn: :success, add: 'w-full') %>
     </div>
   <% end %>
 </div>
