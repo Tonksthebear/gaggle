@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    gaggle (0.1.13)
+    gaggle (0.2.0)
       classy-yaml
       mcp-rails (>= 0.4)
       rails (>= 7.2)
