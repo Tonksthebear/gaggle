@@ -15,7 +15,7 @@ gem "stimulus-rails"
 gem "classy-yaml"
 gem "jbuilder"
 gem "strings-ansi"
-gem "mcp-rails", git: "https://github.com/Tonksthebear/mcp-rails"
+gem "mcp-rails"
 
 group :development do
   gem "web-console"
