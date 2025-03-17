@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "classy-yaml"
   spec.add_dependency "strings-ansi"
   spec.add_dependency "redcarpet"
-  spec.add_dependency "mcp-rails", ">= 0.4"
+  spec.add_dependency "mcp-rails", ">= 0.4.12"
   spec.add_development_dependency "appraisal"
   spec.add_development_dependency "tailwindcss-ruby"
   spec.add_development_dependency "importmap-rails"

@@ -1,7 +1,12 @@
 module Gaggle
   class Engine < ::Rails::Engine
     require "classy/yaml"
+    require "mcp/rails"
     isolate_namespace Gaggle
+
+    rake_tasks do
+      load "gaggle/tasks.rb"
+    end
 
     config.to_prepare do
       Classy::Yaml.setup do |config|
