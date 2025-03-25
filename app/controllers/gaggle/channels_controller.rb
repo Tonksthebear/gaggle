@@ -23,6 +23,7 @@ module Gaggle
     tool_description_for :show, "View all messages in a channel"
     def show
       @notification = Current.goose_user&.notifications&.unread&.for_messageable(@channel)&.first
+      @tasks = @channel.tasks
     end
 
     def new; end

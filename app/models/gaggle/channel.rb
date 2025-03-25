@@ -5,6 +5,7 @@ module Gaggle
     has_many :messages, class_name: "Gaggle::Message", as: :messageable, dependent: :destroy
     has_and_belongs_to_many :gooses
     has_many :notifications, class_name: "Gaggle::Notification", dependent: :destroy, as: :messageable
+    has_many :tasks, class_name: "Gaggle::Task"
 
     validates :name, presence: true
 

@@ -1,0 +1,15 @@
+<h1><%= @board.name %></h1>
+
+<div>
+  <h2>Columns</h2>
+  <ul>
+    <% @board.columns.each do |column| %>
+      <li><%= column.name %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div>
+  <%= link_to 'Edit', edit_board_path(@board) %> |
+  <%= link_to 'Back to Boards', boards_path %>
+</div>
