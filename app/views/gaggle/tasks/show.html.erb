@@ -1,0 +1,24 @@
+<h1>Task Details</h1>
+
+<p>
+  <strong>Title:</strong>
+  <%= @task.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @task.status.humanize %>
+</p>
+
+<p>
+  <strong>Assigned Goose:</strong>
+  <%= @task.assigned_goose&.name %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back to Task List', tasks_path %>

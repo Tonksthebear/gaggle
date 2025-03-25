@@ -16,4 +16,6 @@ Gaggle::Engine.routes.draw do
   end
 
   resources :sessions, only: [ :show, :update, :destroy ]
+
+  resources :tasks
 end
